@@ -1,0 +1,16 @@
+# Large vendor / reference downloads (not project source)
+Proctoring-AI-master/
+arcadeui-main/
+powerglitch-master/
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
