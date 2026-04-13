@@ -72,24 +72,6 @@
   --gba-card-bg-mid:   #141c48;
   --gba-card-bg-hi:    #182050;
 
-  /* Legacy aliases (referenced by inline styles in JS) */
-  --color-pixel-black:    #080c24;
-  --color-pixel-darkGray: #182050;
-  --color-pixel-gray:     #2840a0;
-  --color-pixel-lightGray:#8898c0;
-  --color-pixel-white:    #c8d4f0;
-  --color-pixel-blue:     #4a6cc0;
-  --color-pixel-darkBlue: #2840a0;
-  --color-pixel-red:      #ff6b8a;
-  --color-pixel-darkRed:  #c0303e;
-  --color-pixel-green:    #3ddc84;
-  --color-pixel-darkGreen:#1fa85c;
-  --color-pixel-yellow:   #ffd700;
-  --color-pixel-orange:   #ff8c40;
-  --color-pixel-purple:   #9060d0;
-  --color-pixel-pink:     #ff6b8a;
-  --color-pixel-cyan:     #40c8e0;
-
   /* Fonts */
   --font-pixel: "Silkscreen", "Monaco", monospace;
   --font-retro: "Share Tech Mono", "Roboto Mono", monospace;
@@ -220,24 +202,6 @@ body::before {
 @keyframes scanlineScroll {
   from { background-position: 0 0; }
   to   { background-position: 0 200px; }
-}
-
-.gba-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 8px 8px;
-}
-
-.gba-dpad {
-  width: 60px;
-  height: 60px;
-  position: relative;
-}
-
-.gba-ab-buttons {
-  display: flex;
-  gap: 12px;
 }
 
 .gba-label {
