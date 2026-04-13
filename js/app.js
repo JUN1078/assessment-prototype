@@ -23,7 +23,7 @@ window.PymetricApp = (function () {
         <b>2.</b> Click <b>SAVE</b> to keep your earnings before the balloon explodes.<br>
         <b>3.</b> If the balloon explodes, you lose all unsaved earnings for that round.<br>
         <b>4.</b> Each balloon has a hidden explosion point — you won't know when it will pop!<br>
-        <b>5.</b> 3 balloons total: <span style="color:#ff9f43">●ORANGE</span>, <span style="color:#ffd32a">●YELLOW</span>, <span style="color:#4169e1">●BLUE</span>
+        <b>5.</b> 3 balloons total: <span style="color:#ff8c40">●ORANGE</span>, <span style="color:#ffd700">●YELLOW</span>, <span style="color:#4a6cc0">●BLUE</span>
       `,
       module: () => window.BalloonGame,
       initFn: 'init'
@@ -62,7 +62,7 @@ window.PymetricApp = (function () {
       tags: [['badge-yellow','MOTIVATION'],['badge-red','DECISION']],
       desc: 'Choose between easy tasks (low reward) or hard tasks (high reward). 12 rounds.',
       instructions: `
-        <b>1.</b> Each round, choose <span style="color:#2ecc71">EASY</span> or <span style="color:#ff4757">HARD</span> task.<br>
+        <b>1.</b> Each round, choose <span style="color:#3ddc84">EASY</span> or <span style="color:#ff6b8a">HARD</span> task.<br>
         <b>2.</b> <b>Easy:</b> 20 presses in 10s → <b>$0.30</b> reward (80% success rate)<br>
         <b>3.</b> <b>Hard:</b> 50 presses in 10s → <b>$2.00</b> reward (30% success rate)<br>
         <b>4.</b> Earn reward only if you succeed at the chosen task.<br>
@@ -226,8 +226,8 @@ window.PymetricApp = (function () {
 
     const row = (label, val, ok) =>
       `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-        <span style="color:var(--color-pixel-lightGray);font-size:9px;letter-spacing:1px;">${label}</span>
-        <span style="color:${ok === false ? 'var(--color-pixel-red)' : ok === true ? 'var(--color-pixel-green)' : 'var(--color-pixel-white)'};font-size:9px;">${val}</span>
+        <span style="color:var(--gba-text-dim);font-size:9px;letter-spacing:1px;">${label}</span>
+        <span style="color:${ok === false ? 'var(--gba-red)' : ok === true ? 'var(--gba-green)' : 'var(--gba-text)'};font-size:9px;">${val}</span>
       </div>`;
 
     panel.innerHTML =
@@ -299,6 +299,30 @@ window.PymetricApp = (function () {
     if (nameEl) nameEl.textContent = sessionInfo.name.toUpperCase();
 
     // Build game cards
+    // Lobby card PNG assets
+    const CARD_STATE_ASSETS = {
+      done:   'assets/ui/card-completed.png',
+      next:   'assets/ui/card-next.png',
+      locked: 'assets/ui/card-locked.png'
+    };
+    const GAME_THUMB_ASSETS = {
+      1: 'assets/ui/gamelist-balloon.png',
+      2: 'assets/ui/gamelist-tower.png',
+      3: 'assets/ui/gamelist-keypress.png',
+      4: 'assets/ui/gamelist-cards.png',  // closest match for hard/easy
+      5: 'assets/icons/union-10.png',     // green ruler icon for lengths
+      6: 'assets/ui/gamelist-faces.png'
+    };
+    // Inactive icon variants for locked state
+    const GAME_ICON_LOCKED = {
+      1: 'assets/icons/union-7.png',  // gray target
+      2: 'assets/icons/union-9.png',  // gray card
+      3: 'assets/icons/union-3.png',  // gray keyboard
+      4: 'assets/icons/union-9.png',  // gray card
+      5: 'assets/icons/union-11.png', // gray ruler
+      6: 'assets/icons/union-5.png'   // gray smiley
+    };
+
     const grid = document.getElementById('lobby-grid');
     if (grid) {
       grid.innerHTML = '';
@@ -306,12 +330,29 @@ window.PymetricApp = (function () {
         const card = document.createElement('div');
         const isDone = !!gameResults[game.id];
         const isNext = !isDone && idx === currentGameIdx;
+        const stateKey = isDone ? 'done' : isNext ? 'next' : 'locked';
         card.className = 'lobby-card' +
           (isDone ? ' done' : isNext ? ' next-up' : ' locked');
 
+        // Apply card state PNG as background overlay
+        const stateAsset = CARD_STATE_ASSETS[stateKey];
+        card.style.backgroundImage = `url('${stateAsset}')`;
+        card.style.backgroundSize = 'cover';
+        card.style.backgroundPosition = 'center';
+        card.style.backgroundRepeat = 'no-repeat';
+        card.style.imageRendering = 'pixelated';
+
+        // Game thumbnail — use active or locked variant based on state
+        const thumbAsset = stateKey === 'locked' && GAME_ICON_LOCKED[game.id]
+          ? GAME_ICON_LOCKED[game.id]
+          : GAME_THUMB_ASSETS[game.id];
+        const thumbHTML = thumbAsset
+          ? `<img src="${thumbAsset}" alt="${game.name}" style="width:48px;height:auto;image-rendering:pixelated;margin:4px auto;display:block;${stateKey === 'locked' ? 'opacity:0.4;filter:grayscale(1);' : ''}">`
+          : `<div class="lobby-card-icon">${game.icon}</div>`;
+
         card.innerHTML = `
           <div class="lobby-card-num">0${game.id}</div>
-          <div class="lobby-card-icon">${game.icon}</div>
+          ${thumbHTML}
           <div class="lobby-card-name">${game.name}</div>
           <div class="lobby-card-tags">
             ${game.tags.map(([cls, lbl]) =>
@@ -461,7 +502,7 @@ window.PymetricApp = (function () {
 
     if (!captures || captures.length === 0) {
       el.innerHTML = `
-        <div style="font-family:var(--font-pixel);font-size:9px;color:var(--color-pixel-gray);letter-spacing:1px;padding:8px 0;">
+        <div style="font-family:var(--font-pixel);font-size:9px;color:var(--gba-card-border);letter-spacing:1px;padding:8px 0;">
           NO CAPTURES RECORDED — SCREEN SHARE OR CAMERA NOT ACTIVE
         </div>`;
       return;
@@ -531,10 +572,10 @@ window.PymetricApp = (function () {
     const proctorEl = document.getElementById('final-proctor-log');
     if (proctorEl) {
       const integrityColor = proctorReport.integrityScore >= 80
-        ? 'var(--color-pixel-green)'
+        ? 'var(--gba-green)'
         : proctorReport.integrityScore >= 50
-          ? 'var(--color-pixel-yellow)'
-          : 'var(--color-pixel-red)';
+          ? 'var(--gba-gold)'
+          : 'var(--gba-red)';
 
       proctorEl.innerHTML = `
         <div class="result-metric">

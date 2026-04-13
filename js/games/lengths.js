@@ -81,6 +81,14 @@ window.LengthsGame = (function () {
 
     arena.innerHTML = '';
 
+    // Line PNG assets for bar textures
+    const LINE_ASSETS = [
+      'assets/games/lengths/line-a.png',
+      'assets/games/lengths/line-b.png',
+      'assets/games/lengths/line-c.png',
+      'assets/games/lengths/line-d.png'
+    ];
+
     [q.topWidth, q.bottomWidth].forEach((widthPct, idx) => {
       const wrap = document.createElement('div');
       wrap.className = 'length-bar-wrap';
@@ -94,6 +102,12 @@ window.LengthsGame = (function () {
       bar.className = 'length-bar';
       bar.style.width = `${widthPct}%`;
       bar.style.maxWidth = '100%';
+      // Apply PNG line texture
+      const lineAsset = LINE_ASSETS[idx % LINE_ASSETS.length];
+      bar.style.backgroundImage = `url('${lineAsset}')`;
+      bar.style.backgroundSize = '100% 100%';
+      bar.style.backgroundRepeat = 'no-repeat';
+      bar.style.imageRendering = 'pixelated';
 
       wrap.appendChild(label);
       wrap.appendChild(bar);
@@ -116,15 +130,23 @@ window.LengthsGame = (function () {
     if (correct) { correctCount++; window.PymetricSounds && window.PymetricSounds.sfxCorrect(); }
     else { window.PymetricSounds && window.PymetricSounds.sfxWrong(); }
 
-    // Visual feedback on bars
+    // Visual feedback on bars using answer PNG assets
     const arena = document.getElementById('len-arena');
     const wraps = arena ? arena.querySelectorAll('.length-bar-wrap') : [];
     wraps.forEach((w, i) => {
       const bar = w.querySelector('.length-bar');
       if (i === q.correctIndex) {
-        if (bar) bar.style.background = 'var(--color-pixel-green)';
+        if (bar) {
+          bar.style.backgroundImage = "url('assets/ui/answer-correct.png')";
+          bar.style.backgroundSize = 'cover';
+          bar.style.backgroundColor = 'var(--gba-green)';
+        }
       } else {
-        if (bar) bar.style.background = 'var(--color-pixel-red)';
+        if (bar) {
+          bar.style.backgroundImage = "url('assets/ui/answer-wrong-selected.png')";
+          bar.style.backgroundSize = 'cover';
+          bar.style.backgroundColor = 'var(--gba-red)';
+        }
       }
       w.style.pointerEvents = 'none';
     });
@@ -134,8 +156,8 @@ window.LengthsGame = (function () {
         ? `✓ CORRECT! (${rt}ms)`
         : `✗ WRONG — ${chosenIdx === 0 ? 'B' : 'A'} was longer (${rt}ms)`,
       correct
-        ? 'color:var(--color-pixel-green)'
-        : 'color:var(--color-pixel-red)'
+        ? 'color:var(--gba-green)'
+        : 'color:var(--gba-red)'
     );
 
     updateHUD();

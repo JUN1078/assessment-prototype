@@ -16,9 +16,9 @@ window.BalloonGame = (function () {
   const REWARD_PER_PUMP = 500; // Rp 500 per pump
 
   const BALLOONS = [
-    { color: '#ff9f43', darkColor: '#e07b15', name: 'ORANYE', maxExplode: 8,   label: 'ORANGE' },
-    { color: '#ffd32a', darkColor: '#e6a817', name: 'KUNING', maxExplode: 32,  label: 'YELLOW' },
-    { color: '#4169e1', darkColor: '#1e3c8c', name: 'BIRU',   maxExplode: 128, label: 'BLUE'   }
+    { color: '#ff8c40', darkColor: '#e07830', name: 'ORANYE', maxExplode: 8,   label: 'ORANGE' },
+    { color: '#ffd700', darkColor: '#ccaa00', name: 'KUNING', maxExplode: 32,  label: 'YELLOW' },
+    { color: '#4a6cc0', darkColor: '#2840a0', name: 'BIRU',   maxExplode: 128, label: 'BLUE'   }
   ];
 
   let currentBalloon = 0;
@@ -81,7 +81,7 @@ window.BalloonGame = (function () {
       body.setAttribute('cy', '90');
     }
     clearExplosion();
-    setFeedback(`BALLOON ${currentBalloon + 1}/3 — ${bal.label}`, 'color:var(--color-pixel-white)');
+    setFeedback(`BALLOON ${currentBalloon + 1}/3 — ${bal.label}`, 'color:var(--gba-text)');
     document.getElementById('btnPump').disabled = false;
     document.getElementById('btnSave').disabled = false;
     updateUI();
@@ -139,7 +139,7 @@ window.BalloonGame = (function () {
       metrics.blueExplodeAt = explodeAt;
     }
 
-    setFeedback(`✓ SAVED Rp ${saved.toLocaleString('id-ID')}!`, 'color:var(--color-pixel-green)');
+    setFeedback(`✓ SAVED Rp ${saved.toLocaleString('id-ID')}!`, 'color:var(--gba-green)');
     advanceBalloon();
   }
 
@@ -170,7 +170,7 @@ window.BalloonGame = (function () {
     const roundLoss = roundMoney;
     roundMoney = 0;
     updateUI();
-    setFeedback(`💥 BALLOON EXPLODED! LOST Rp ${roundLoss.toLocaleString('id-ID')}`, 'color:var(--color-pixel-red)');
+    setFeedback(`💥 BALLOON EXPLODED! LOST Rp ${roundLoss.toLocaleString('id-ID')}`, 'color:var(--gba-red)');
 
     setTimeout(() => {
       clearExplosion();

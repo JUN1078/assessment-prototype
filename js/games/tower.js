@@ -17,7 +17,7 @@ window.TowerGame = (function () {
   const OPTIMAL_MOVES = 31;
 
   // Disk colours (largest first)
-  const DISK_COLORS = ['#9b59b6', '#4169e1', '#2ecc71', '#ffd32a', '#ff4757'];
+  const DISK_COLORS = ['#8030c0', '#3060d0', '#30a050', '#808020', '#c03050'];
   const DISK_WIDTHS = [200, 170, 140, 110, 80]; // px
 
   let pegs = [[], [], []];     // peg[0] = starting peg, each item = disk size (1=smallest)
@@ -81,12 +81,12 @@ window.TowerGame = (function () {
     if (selected === null) {
       // Select peg (must have disks)
       if (pegs[pegIdx].length === 0) {
-        setFeedback('EMPTY PEG — SELECT A PEG WITH DISKS', 'color:var(--color-pixel-yellow)');
+        setFeedback('EMPTY PEG — SELECT A PEG WITH DISKS', 'color:var(--gba-gold)');
         return;
       }
       selected = pegIdx;
       renderBoard();
-      setFeedback(`PEG ${pegIdx + 1} SELECTED — CLICK TARGET PEG`, 'color:var(--color-pixel-blue)');
+      setFeedback(`PEG ${pegIdx + 1} SELECTED — CLICK TARGET PEG`, 'color:var(--gba-frame-mid)');
     } else {
       // Attempt to move
       if (selected === pegIdx) {
@@ -112,7 +112,7 @@ window.TowerGame = (function () {
         selected = null;
         renderBoard();
         updateHUD();
-        setFeedback(`DISK ${fromDisk} MOVED TO PEG ${pegIdx + 1}`, 'color:var(--color-pixel-green)');
+        setFeedback(`DISK ${fromDisk} MOVED TO PEG ${pegIdx + 1}`, 'color:var(--gba-green)');
         checkWin();
       } else {
         // Invalid move
@@ -120,7 +120,7 @@ window.TowerGame = (function () {
         violations++;
         selected = null;
         renderBoard();
-        setFeedback('✗ INVALID! CANNOT PLACE LARGER DISK ON SMALLER', 'color:var(--color-pixel-red)');
+        setFeedback('✗ INVALID! CANNOT PLACE LARGER DISK ON SMALLER', 'color:var(--gba-red)');
         document.getElementById('tower-board').classList.add('anim-shake');
         setTimeout(() => document.getElementById('tower-board').classList.remove('anim-shake'), 600);
       }
@@ -134,13 +134,22 @@ window.TowerGame = (function () {
       clearInterval(timerInterval);
       gameComplete = true;
       sfx('sfxComplete');
-      setFeedback('🏆 PUZZLE SOLVED! WELL DONE!', 'color:var(--color-pixel-yellow);font-size:14px;');
+      setFeedback('🏆 PUZZLE SOLVED! WELL DONE!', 'color:var(--gba-gold);font-size:14px;');
       const doneBtn = document.getElementById('btnTowerDone');
       if (doneBtn) doneBtn.textContent = '🏆 DONE → NEXT';
     }
   }
 
   /* ── Render the board ── */
+  // PNG asset paths for disks and pegs
+  const DISK_ASSETS = [
+    'assets/games/tower/disk-5.png', // diskSize 5 (largest)
+    'assets/games/tower/disk-4.png',
+    'assets/games/tower/disk-3.png',
+    'assets/games/tower/disk-2.png',
+    'assets/games/tower/disk-1.png'  // diskSize 1 (smallest)
+  ];
+
   function renderBoard() {
     const board = document.getElementById('tower-board');
     if (!board) return;
@@ -153,9 +162,15 @@ window.TowerGame = (function () {
       peg.onclick = () => clickPeg(pi);
       peg.title = `Peg ${pi + 1}`;
 
+      // Peg rod using PNG asset
+      const pegRod = document.createElement('div');
+      pegRod.className = 'tower-peg-rod';
+      pegRod.style.cssText = `position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:20px;height:100%;background-image:url('assets/games/tower/peg.png');background-size:contain;background-repeat:no-repeat;background-position:bottom center;pointer-events:none;opacity:0.7;image-rendering:pixelated;`;
+      peg.appendChild(pegRod);
+
       // Label
       const label = document.createElement('div');
-      label.style.cssText = `position:absolute;bottom:-24px;font-family:var(--font-pixel);font-size:10px;color:var(--color-pixel-lightGray);letter-spacing:1px;`;
+      label.style.cssText = `position:absolute;bottom:-24px;font-family:var(--font-pixel);font-size:10px;color:var(--gba-text-dim);letter-spacing:1px;`;
       label.textContent = pi === selected ? `◀ PEG ${pi + 1} ▶` : `PEG ${pi + 1}`;
       peg.appendChild(label);
 
@@ -165,7 +180,12 @@ window.TowerGame = (function () {
         disk.className = 'disk';
         const colorIdx = NUM_DISKS - diskSize; // largest disk = index 0
         disk.style.width  = `${DISK_WIDTHS[colorIdx]}px`;
-        disk.style.background = DISK_COLORS[colorIdx];
+        // Use PNG asset as background, fall back to color
+        disk.style.backgroundImage = `url('${DISK_ASSETS[NUM_DISKS - diskSize]}')`;
+        disk.style.backgroundSize = '100% 100%';
+        disk.style.backgroundRepeat = 'no-repeat';
+        disk.style.backgroundColor = DISK_COLORS[colorIdx];
+        disk.style.imageRendering = 'pixelated';
         disk.style.borderColor = 'rgba(0,0,0,0.4)';
         disk.style.zIndex = idx + 1;
         // Add disk number label
@@ -193,14 +213,14 @@ window.TowerGame = (function () {
   function reset() {
     clearInterval(timerInterval);
     init();
-    setFeedback('BOARD RESET', 'color:var(--color-pixel-yellow)');
+    setFeedback('BOARD RESET', 'color:var(--gba-gold)');
   }
 
   function finish() {
     if (!gameComplete) {
       clearInterval(timerInterval);
       gameComplete = true;
-      setFeedback('SESSION ENDED MANUALLY', 'color:var(--color-pixel-lightGray)');
+      setFeedback('SESSION ENDED MANUALLY', 'color:var(--gba-text-dim)');
     }
     // Signal to app controller
     if (window.PymetricApp) window.PymetricApp.gameFinished(2, getResults());

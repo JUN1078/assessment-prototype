@@ -34,7 +34,7 @@ window.KeypressGame = (function () {
     updateTimerDisplay();
     const countEl = document.getElementById('kp-count-display');
     if (countEl) countEl.textContent = '—';
-    setFeedback('PRESS SPACEBAR TO BEGIN', 'color:var(--color-pixel-lightGray)');
+    setFeedback('PRESS SPACEBAR TO BEGIN', 'color:var(--gba-text-dim)');
 
     // Keyboard listener
     document.addEventListener('keydown', handleKey);
@@ -69,7 +69,7 @@ window.KeypressGame = (function () {
     registerPress();
 
     timerInterval = setInterval(tick, 1000);
-    setFeedback('KEEP PRESSING!', 'color:var(--color-pixel-green)');
+    setFeedback('KEEP PRESSING!', 'color:var(--gba-green)');
   }
 
   function tick() {
@@ -136,7 +136,7 @@ window.KeypressGame = (function () {
 
     setFeedback(
       `DONE! ${totalPresses} PRESSES — ${(totalPresses / DURATION).toFixed(1)}/sec`,
-      'color:var(--color-pixel-yellow);font-size:13px;'
+      'color:var(--gba-gold);font-size:13px;'
     );
 
     if (window.PymetricApp) window.PymetricApp.gameFinished(3, getResults());

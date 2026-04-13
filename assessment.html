@@ -6,24 +6,33 @@
   <title>PYMETRIC ARCADE — Assessment</title>
   <link rel="stylesheet" href="css/arcade.css"/>
   <style>
-    body { background: #080814; overflow-x: hidden; }
+    body {
+      background: var(--gba-bg-deep);
+      background-image: url('assets/ui/background.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-blend-mode: overlay;
+      image-rendering: pixelated;
+      overflow-x: hidden;
+    }
 
     /* ── Layout ── */
     #assessment-wrap { display: flex; min-height: 100vh; flex-direction: column; }
     #top-bar {
-      background: var(--color-pixel-black);
-      border-bottom: 4px solid var(--color-pixel-blue);
+      background: var(--gba-bg-deep);
+      border-bottom: 4px solid var(--gba-frame-mid);
       padding: 10px 16px;
       display: flex; align-items: center; justify-content: space-between;
       flex-wrap: wrap; gap: 8px; position: sticky; top: 0; z-index: 100;
     }
     #top-bar .logo {
       font-family: var(--font-pixel); font-size: 14px;
-      color: var(--color-pixel-yellow); letter-spacing: 2px;
+      color: var(--gba-gold); letter-spacing: 2px;
     }
     #player-info-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-    #player-info-bar span { font-family: var(--font-pixel); font-size: 10px; color: var(--color-pixel-lightGray); letter-spacing: 1px; }
-    #player-info-bar b { color: var(--color-pixel-white); }
+    #player-info-bar span { font-family: var(--font-pixel); font-size: 10px; color: var(--gba-text-dim); letter-spacing: 1px; }
+    #player-info-bar b { color: var(--gba-text); }
 
     #main-body { display: flex; flex: 1; gap: 0; }
 
@@ -31,13 +40,17 @@
     #sidebar {
       width: 220px; min-width: 220px;
       background: rgba(0,0,0,0.5);
-      border-right: 4px solid var(--color-pixel-gray);
+      background-image: url('assets/ui/scrollable-content.png');
+      background-size: cover;
+      background-blend-mode: overlay;
+      image-rendering: pixelated;
+      border-right: 4px solid var(--gba-card-border);
       padding: 16px 0; display: flex; flex-direction: column;
     }
     #sidebar h3 {
       font-family: var(--font-pixel); font-size: 10px;
-      color: var(--color-pixel-lightGray); letter-spacing: 2px;
-      padding: 0 16px 10px; border-bottom: 3px solid var(--color-pixel-gray);
+      color: var(--gba-text-dim); letter-spacing: 2px;
+      padding: 0 16px 10px; border-bottom: 3px solid var(--gba-card-border);
       margin-bottom: 8px;
     }
     .sidebar-game-item {
@@ -46,14 +59,14 @@
       border-left: 4px solid transparent;
     }
     .sidebar-game-item.active {
-      background: rgba(65,105,225,0.15);
-      border-left-color: var(--color-pixel-blue);
-      color: var(--color-pixel-blue);
+      background: rgba(74,108,192,0.15);
+      border-left-color: var(--gba-frame-mid);
+      color: var(--gba-frame-mid);
     }
     .sidebar-game-item.done {
-      background: rgba(46,204,113,0.08);
-      border-left-color: var(--color-pixel-green);
-      color: var(--color-pixel-green);
+      background: rgba(61,220,132,0.08);
+      border-left-color: var(--gba-green);
+      color: var(--gba-green);
     }
     .sidebar-game-item.locked { opacity: 0.4; }
     .s-num {
@@ -61,16 +74,19 @@
       width: 22px; height: 22px; border: 2px solid currentColor;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
+    .s-icon { width: 18px; height: 18px; image-rendering: pixelated; opacity: 0.7; flex-shrink: 0; }
+    .sidebar-game-item.active .s-icon { opacity: 1; }
+    .sidebar-game-item.done .s-icon { opacity: 1; filter: hue-rotate(90deg) brightness(1.2); }
     .s-label { font-family: var(--font-pixel); font-size: 9px; letter-spacing: 1px; }
 
     /* Sidebar score summary */
     #sidebar-score {
       margin-top: auto; padding: 16px;
-      border-top: 3px solid var(--color-pixel-gray);
+      border-top: 3px solid var(--gba-card-border);
     }
     .ss-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
-    .ss-label { font-family: var(--font-pixel); font-size: 9px; color: var(--color-pixel-lightGray); letter-spacing: 1px; }
-    .ss-val   { font-family: var(--font-pixel); font-size: 10px; color: var(--color-pixel-yellow); }
+    .ss-label { font-family: var(--font-pixel); font-size: 9px; color: var(--gba-text-dim); letter-spacing: 1px; }
+    .ss-val   { font-family: var(--font-pixel); font-size: 10px; color: var(--gba-gold); }
 
     /* Game area */
     #game-area { flex: 1; padding: 20px; overflow-y: auto; }
@@ -86,21 +102,61 @@
     .game-intro-header .big-icon { font-size: 72px; margin-bottom: 8px; }
     .game-intro-header h2 {
       font-family: var(--font-pixel); font-size: 24px;
-      color: var(--color-pixel-yellow); letter-spacing: 3px; margin-bottom: 6px;
+      color: var(--gba-gold); letter-spacing: 3px; margin-bottom: 6px;
     }
-    .game-intro-header p { color: var(--color-pixel-lightGray); font-size: 13px; line-height: 1.8; max-width: 600px; margin: 0 auto; }
+    .game-intro-header p { color: var(--gba-text-dim); font-size: 13px; line-height: 1.8; max-width: 600px; margin: 0 auto; }
+
+    /* Button PNG asset states */
+    .btn {
+      background-image: url('assets/ui/btn-default-1.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      image-rendering: pixelated;
+    }
+    .btn:hover {
+      background-image: url('assets/ui/btn-hover.png');
+    }
+    .btn:active, .btn.pressed {
+      background-image: url('assets/ui/btn-pressed.png');
+    }
+    .btn.selected, .btn:focus {
+      background-image: url('assets/ui/btn-selected.png');
+    }
+    .btn-primary {
+      background-image: url('assets/ui/btn-default-2.png');
+    }
+    .btn-success {
+      background-image: url('assets/ui/btn-default-3.png');
+    }
+    .btn-danger {
+      background-image: url('assets/ui/btn-default-4.png');
+    }
+    .btn-primary:hover, .btn-success:hover, .btn-danger:hover {
+      background-image: url('assets/ui/btn-hover-1.png');
+    }
+    .btn-primary:active, .btn-success:active, .btn-danger:active {
+      background-image: url('assets/ui/btn-pressed-1.png');
+    }
+    .btn-primary:focus, .btn-success:focus, .btn-danger:focus {
+      background-image: url('assets/ui/btn-selected-1.png');
+    }
 
     /* Game container */
     .game-panel {
       max-width: 820px; margin: 0 auto;
-      background: #0d0d1a; border: 4px solid var(--color-pixel-blue);
-      box-shadow: inset 0 0 40px rgba(65,105,225,0.08), var(--shadow-pixel-glow-blue);
+      background: var(--gba-card-bg); border: 4px solid var(--gba-frame-mid);
+      box-shadow: inset 0 0 40px rgba(74,108,192,0.08), var(--shadow-pixel-glow-blue);
       padding: 24px; position: relative;
+      border-image-source: url('assets/ui/gba-frame.png');
+      border-image-slice: 12;
+      border-image-repeat: stretch;
+      image-rendering: pixelated;
     }
     .game-hud {
       display: flex; justify-content: space-between; align-items: center;
       margin-bottom: 16px; padding-bottom: 12px;
-      border-bottom: 3px solid var(--color-pixel-gray);
+      border-bottom: 3px solid var(--gba-card-border);
       flex-wrap: wrap; gap: 8px;
     }
 
@@ -110,8 +166,8 @@
     }
     #screen-done h2 {
       font-family: var(--font-pixel); font-size: 32px;
-      color: var(--color-pixel-green); letter-spacing: 4px; margin-bottom: 20px;
-      text-shadow: 0 0 20px rgba(46,204,113,0.5);
+      color: var(--gba-green); letter-spacing: 4px; margin-bottom: 20px;
+      text-shadow: 0 0 20px rgba(61,220,132,0.5);
     }
     .final-table-wrap { max-width: 700px; margin: 0 auto; }
 
@@ -119,33 +175,33 @@
     .lobby-wrap { padding: 16px 20px; max-width: 920px; margin: 0 auto; }
     .lobby-header {
       text-align: center; padding: 14px;
-      border: 4px solid var(--color-pixel-yellow);
-      background: rgba(255,211,42,0.04);
-      box-shadow: 0 0 24px rgba(255,211,42,0.18);
+      border: 4px solid var(--gba-gold);
+      background: rgba(255,215,0,0.04);
+      box-shadow: 0 0 24px rgba(255,215,0,0.18);
       margin-bottom: 14px;
     }
     .lobby-title {
       font-family: var(--font-pixel);
       font-size: clamp(16px, 3vw, 26px);
-      color: var(--color-pixel-yellow);
+      color: var(--gba-gold);
       letter-spacing: 4px;
-      text-shadow: 0 0 18px rgba(255,211,42,0.45);
+      text-shadow: 0 0 18px rgba(255,215,0,0.45);
       margin-bottom: 5px;
     }
     .lobby-subtitle {
       font-family: var(--font-pixel); font-size: 9px;
-      color: var(--color-pixel-cyan); letter-spacing: 3px;
+      color: var(--gba-cyan); letter-spacing: 3px;
     }
     .lobby-ticker {
-      background: var(--color-pixel-blue);
-      border: 3px solid var(--color-pixel-darkBlue);
+      background: var(--gba-frame-mid);
+      border: 3px solid var(--gba-card-border);
       overflow: hidden; white-space: nowrap;
       padding: 5px 0; margin-bottom: 14px;
     }
     .lobby-ticker span {
       display: inline-block;
       font-family: var(--font-pixel); font-size: 9px;
-      color: var(--color-pixel-white); letter-spacing: 2px;
+      color: var(--gba-text); letter-spacing: 2px;
       animation: lobbyTick 22s linear infinite;
     }
     @keyframes lobbyTick { from { transform: translateX(100vw); } to { transform: translateX(-200%); } }
@@ -159,34 +215,34 @@
 
     .lobby-card {
       background: rgba(5,5,20,0.95);
-      border: 3px solid var(--color-pixel-gray);
+      border: 3px solid var(--gba-card-border);
       padding: 12px 10px; text-align: center;
       position: relative; transition: all 0.2s;
     }
     .lobby-card.next-up {
-      border-color: var(--color-pixel-yellow);
-      box-shadow: 0 0 18px rgba(255,211,42,0.35);
-      background: rgba(255,211,42,0.05);
+      border-color: var(--gba-gold);
+      box-shadow: 0 0 18px rgba(255,215,0,0.35);
+      background: rgba(255,215,0,0.05);
       animation: cardGlow 1.6s ease infinite;
     }
     @keyframes cardGlow {
-      0%,100% { box-shadow: 0 0 18px rgba(255,211,42,0.35); }
-      50%      { box-shadow: 0 0 32px rgba(255,211,42,0.65); }
+      0%,100% { box-shadow: 0 0 18px rgba(255,215,0,0.35); }
+      50%      { box-shadow: 0 0 32px rgba(255,215,0,0.65); }
     }
     .lobby-card.done {
-      border-color: var(--color-pixel-green);
-      background: rgba(46,204,113,0.07);
+      border-color: var(--gba-green);
+      background: rgba(61,220,132,0.07);
     }
     .lobby-card.locked { opacity: 0.5; }
     .lobby-card-num {
       position: absolute; top: 5px; left: 7px;
       font-family: var(--font-pixel); font-size: 8px;
-      color: var(--color-pixel-gray);
+      color: var(--gba-card-border);
     }
     .lobby-card-icon { font-size: 32px; margin: 6px 0 5px; line-height: 1; }
     .lobby-card-name {
       font-family: var(--font-pixel); font-size: 9px;
-      color: var(--color-pixel-white); letter-spacing: 1px; margin-bottom: 5px;
+      color: var(--gba-text); letter-spacing: 1px; margin-bottom: 5px;
     }
     .lobby-card-tags { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; margin-bottom: 6px; }
     .lobby-card-tags .badge { font-size: 7px; padding: 2px 4px; }
@@ -194,46 +250,46 @@
       font-family: var(--font-pixel); font-size: 8px; letter-spacing: 1px;
       padding: 2px 6px; border: 2px solid currentColor; display: inline-block;
     }
-    .lcs-next   { color: var(--color-pixel-yellow); }
-    .lcs-locked { color: var(--color-pixel-gray); }
-    .lcs-done   { color: var(--color-pixel-green); }
+    .lcs-next   { color: var(--gba-gold); }
+    .lcs-locked { color: var(--gba-card-border); }
+    .lcs-done   { color: var(--gba-green); }
 
     .lobby-bottom {
       display: flex; gap: 18px; align-items: center;
       justify-content: center; flex-wrap: wrap;
     }
     .lobby-player-box {
-      background: rgba(0,0,0,0.5); border: 3px solid var(--color-pixel-blue);
+      background: rgba(0,0,0,0.5); border: 3px solid var(--gba-frame-mid);
       padding: 14px 20px; min-width: 200px;
-      box-shadow: 0 0 14px rgba(65,105,225,0.25);
+      box-shadow: 0 0 14px rgba(74,108,192,0.25);
     }
     .lobby-player-label {
       font-family: var(--font-pixel); font-size: 8px;
-      color: var(--color-pixel-blue); letter-spacing: 3px; margin-bottom: 5px;
+      color: var(--gba-frame-mid); letter-spacing: 3px; margin-bottom: 5px;
     }
     .lobby-player-name {
       font-family: var(--font-pixel); font-size: 13px;
-      color: var(--color-pixel-white); letter-spacing: 2px; margin-bottom: 5px;
+      color: var(--gba-text); letter-spacing: 2px; margin-bottom: 5px;
     }
     .lobby-proctor-warn {
       font-family: var(--font-pixel); font-size: 8px;
-      color: var(--color-pixel-red); letter-spacing: 1px;
+      color: var(--gba-red); letter-spacing: 1px;
     }
     .lobby-start-wrap { text-align: center; }
     .lobby-note {
       font-family: var(--font-pixel); font-size: 8px;
-      color: var(--color-pixel-gray); letter-spacing: 1px; margin-top: 7px;
+      color: var(--gba-card-border); letter-spacing: 1px; margin-top: 7px;
     }
     .lobby-coin {
       font-family: var(--font-pixel); font-size: 9px;
-      color: var(--color-pixel-yellow); letter-spacing: 2px;
+      color: var(--gba-gold); letter-spacing: 2px;
       margin-top: 5px; animation: pulse 1.5s ease infinite;
     }
 
     /* ── Warning count in top bar ── */
     #warn-counter {
       font-family: var(--font-pixel); font-size: 10px;
-      color: var(--color-pixel-red); letter-spacing: 1px;
+      color: var(--gba-red); letter-spacing: 1px;
     }
     #warn-counter.anim-pulse { animation: pulse 0.8s ease infinite; }
 
@@ -242,7 +298,7 @@
     ════════════════════════════════════ */
     #arcade-splash {
       position: fixed; inset: 0; z-index: 9999;
-      background: #020208;
+      background: #040818;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; overflow: hidden;
       transition: opacity 0.1s;
@@ -256,7 +312,7 @@
     }
     #arcade-splash.flash { animation: splash-flash 0.25s ease; }
     @keyframes splash-flash {
-      0%,100% { background: #020208; }
+      0%,100% { background: #040818; }
       50%      { background: rgba(255,210,42,0.12); }
     }
 
@@ -278,7 +334,7 @@
     /* Pixel noise flicker lines */
     .spl-glitch-line {
       position: absolute; left: 0; right: 0; height: 2px;
-      background: rgba(65,105,225,0.25); pointer-events: none; z-index: 4;
+      background: rgba(74,108,192,0.25); pointer-events: none; z-index: 4;
       animation: glitch-move 6s linear infinite;
     }
     .spl-glitch-line:nth-child(2) { animation-delay: -2.5s; opacity: 0.4; }
@@ -299,14 +355,14 @@
     /* Scrolling top ticker */
     .spl-ticker-wrap {
       width: 100%; overflow: hidden;
-      border-top: 2px solid var(--color-pixel-gray);
-      border-bottom: 2px solid var(--color-pixel-gray);
+      border-top: 2px solid var(--gba-card-border);
+      border-bottom: 2px solid var(--gba-card-border);
       padding: 4px 0;
     }
     .spl-ticker {
       display: inline-block; white-space: nowrap;
       font-family: var(--font-pixel); font-size: 8px;
-      color: var(--color-pixel-gray); letter-spacing: 2px;
+      color: var(--gba-card-border); letter-spacing: 2px;
       animation: ticker-scroll 14s linear infinite;
     }
     @keyframes ticker-scroll {
@@ -327,23 +383,23 @@
 
     /* Pixel frame box */
     .spl-frame {
-      border: 3px solid var(--color-pixel-blue);
+      border: 3px solid var(--gba-frame-mid);
       padding: 16px 28px; width: 100%; box-sizing: border-box;
-      background: rgba(65,105,225,0.05);
-      box-shadow: 0 0 24px rgba(65,105,225,0.35),
-                  inset 0 0 16px rgba(65,105,225,0.06);
+      background: rgba(74,108,192,0.05);
+      box-shadow: 0 0 24px rgba(74,108,192,0.35),
+                  inset 0 0 16px rgba(74,108,192,0.06);
       position: relative;
     }
     .spl-frame::before { content: '◼ ◼ ◼'; position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
-      font-size: 8px; color: var(--color-pixel-yellow); background: #020208; padding: 0 8px; letter-spacing: 6px; }
+      font-size: 8px; color: var(--gba-gold); background: #040818; padding: 0 8px; letter-spacing: 6px; }
     .spl-frame::after  { content: '◼ ◼ ◼'; position: absolute; bottom: -9px; left: 50%; transform: translateX(-50%);
-      font-size: 8px; color: var(--color-pixel-yellow); background: #020208; padding: 0 8px; letter-spacing: 6px; }
+      font-size: 8px; color: var(--gba-gold); background: #040818; padding: 0 8px; letter-spacing: 6px; }
 
     .spl-player-line {
       font-family: var(--font-pixel); font-size: 11px; letter-spacing: 2px;
-      color: var(--color-pixel-yellow); margin-bottom: 10px;
+      color: var(--gba-gold); margin-bottom: 10px;
     }
-    .spl-player-line span { color: var(--color-pixel-white); }
+    .spl-player-line span { color: var(--gba-text); }
 
     .spl-game-list {
       display: flex; flex-wrap: wrap; justify-content: center;
@@ -351,23 +407,23 @@
     }
     .spl-game-tag {
       font-family: var(--font-pixel); font-size: 8px; letter-spacing: 1px;
-      color: var(--color-pixel-blue);
-      border: 1px solid rgba(65,105,225,0.4); padding: 3px 7px;
+      color: var(--gba-frame-mid);
+      border: 1px solid rgba(74,108,192,0.4); padding: 3px 7px;
     }
 
     /* INSERT COIN */
     .spl-insert-coin {
       font-family: var(--font-pixel); font-size: clamp(18px, 5vw, 30px);
-      color: var(--color-pixel-yellow); letter-spacing: 4px;
+      color: var(--gba-gold); letter-spacing: 4px;
       text-shadow: 0 0 18px rgba(255,210,42,0.8), 0 0 40px rgba(255,210,42,0.3);
       animation: blink-coin 1s step-start infinite;
     }
     @keyframes blink-coin { 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
-    .spl-insert-coin.locked { animation: none; opacity: 1; color: var(--color-pixel-green); }
+    .spl-insert-coin.locked { animation: none; opacity: 1; color: var(--gba-green); }
 
     .spl-sub {
       font-family: var(--font-pixel); font-size: 9px;
-      color: var(--color-pixel-lightGray); letter-spacing: 2px;
+      color: var(--gba-text-dim); letter-spacing: 2px;
       animation: pulse 2.5s ease infinite;
     }
 
@@ -377,15 +433,15 @@
     }
     .spl-slot-body {
       width: 64px; height: 34px;
-      border: 3px solid var(--color-pixel-gray); border-radius: 6px;
+      border: 3px solid var(--gba-card-border); border-radius: 6px;
       background: rgba(0,0,0,0.6);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       gap: 3px; position: relative;
       box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
     }
-    .spl-slot-body.active { border-color: var(--color-pixel-yellow); box-shadow: 0 0 12px rgba(255,210,42,0.5), inset 0 2px 8px rgba(0,0,0,0.8); }
-    .spl-slot-slit { width: 28px; height: 3px; background: var(--color-pixel-gray); border-radius: 2px; }
-    .spl-slot-label { font-family: var(--font-pixel); font-size: 6px; color: var(--color-pixel-gray); letter-spacing: 1px; }
+    .spl-slot-body.active { border-color: var(--gba-gold); box-shadow: 0 0 12px rgba(255,210,42,0.5), inset 0 2px 8px rgba(0,0,0,0.8); }
+    .spl-slot-slit { width: 28px; height: 3px; background: var(--gba-card-border); border-radius: 2px; }
+    .spl-slot-label { font-family: var(--font-pixel); font-size: 6px; color: var(--gba-card-border); letter-spacing: 1px; }
 
     /* Coin drop animation */
     #spl-coin-drop {
@@ -405,7 +461,7 @@
 
     .spl-copyright {
       font-family: var(--font-pixel); font-size: 7px;
-      color: var(--color-pixel-gray); letter-spacing: 1px; opacity: 0.45;
+      color: var(--gba-card-border); letter-spacing: 1px; opacity: 0.45;
     }
   </style>
 </head>
@@ -490,12 +546,12 @@
     </div>
     <div style="display:flex;align-items:center;gap:12px;">
       <button id="btn-mute" onclick="toggleMute()" title="Toggle Sound"
-        style="background:none;border:2px solid var(--color-pixel-gray);color:var(--color-pixel-lightGray);font-family:var(--font-pixel);font-size:11px;padding:4px 10px;cursor:pointer;letter-spacing:1px;transition:all 0.2s;"
-        onmouseover="this.style.borderColor='var(--color-pixel-yellow)';this.style.color='var(--color-pixel-yellow)'"
-        onmouseout="this.style.borderColor='var(--color-pixel-gray)';this.style.color='var(--color-pixel-lightGray)'">
+        style="background:none;border:2px solid var(--gba-card-border);color:var(--gba-text-dim);font-family:var(--font-pixel);font-size:11px;padding:4px 10px;cursor:pointer;letter-spacing:1px;transition:all 0.2s;"
+        onmouseover="this.style.borderColor='var(--gba-gold)';this.style.color='var(--gba-gold)'"
+        onmouseout="this.style.borderColor='var(--gba-card-border)';this.style.color='var(--gba-text-dim)'">
         🔊 SFX
       </button>
-      <div style="font-family:var(--font-pixel);font-size:10px;color:var(--color-pixel-green);letter-spacing:1px;">
+      <div style="font-family:var(--font-pixel);font-size:10px;color:var(--gba-green);letter-spacing:1px;">
         🔒 PROCTORED SESSION
       </div>
     </div>
@@ -508,28 +564,28 @@
     <div id="sidebar">
       <h3>▶ GAMES</h3>
       <div class="sidebar-game-item locked" id="sidebar-1" data-game="1">
-        <div class="s-num">1</div><div class="s-label">BALLOON</div>
+        <div class="s-num">1</div><img src="assets/icons/union-6.png" alt="" class="s-icon"><div class="s-label">BALLOON</div>
       </div>
       <div class="sidebar-game-item locked" id="sidebar-2" data-game="2">
-        <div class="s-num">2</div><div class="s-label">TOWER</div>
+        <div class="s-num">2</div><img src="assets/icons/union-9.png" alt="" class="s-icon"><div class="s-label">TOWER</div>
       </div>
       <div class="sidebar-game-item locked" id="sidebar-3" data-game="3">
-        <div class="s-num">3</div><div class="s-label">KEYPRESS</div>
+        <div class="s-num">3</div><img src="assets/icons/union-2.png" alt="" class="s-icon"><div class="s-label">KEYPRESS</div>
       </div>
       <div class="sidebar-game-item locked" id="sidebar-4" data-game="4">
-        <div class="s-num">4</div><div class="s-label">HARD/EASY</div>
+        <div class="s-num">4</div><img src="assets/icons/union-8.png" alt="" class="s-icon"><div class="s-label">HARD/EASY</div>
       </div>
       <div class="sidebar-game-item locked" id="sidebar-5" data-game="5">
-        <div class="s-num">5</div><div class="s-label">LENGTHS</div>
+        <div class="s-num">5</div><img src="assets/icons/union-10.png" alt="" class="s-icon"><div class="s-label">LENGTHS</div>
       </div>
       <div class="sidebar-game-item locked" id="sidebar-6" data-game="6">
-        <div class="s-num">6</div><div class="s-label">FACES</div>
+        <div class="s-num">6</div><img src="assets/icons/union-4.png" alt="" class="s-icon"><div class="s-label">FACES</div>
       </div>
 
       <div id="sidebar-score">
         <div class="ss-row"><span class="ss-label">GAME</span><span class="ss-val" id="ss-current">—</span></div>
         <div class="ss-row"><span class="ss-label">PROGRESS</span><span class="ss-val" id="ss-progress">0/6</span></div>
-        <div class="ss-row"><span class="ss-label">WARNINGS</span><span class="ss-val" id="ss-warnings" style="color:var(--color-pixel-red)">0</span></div>
+        <div class="ss-row"><span class="ss-label">WARNINGS</span><span class="ss-val" id="ss-warnings" style="color:var(--gba-red)">0</span></div>
       </div>
 
       <!-- DEV CHEAT: skip current game -->
@@ -537,12 +593,12 @@
         <button onclick="window.pymetricCheatSkip && window.pymetricCheatSkip()"
           title="DEV: Skip current game (Ctrl+Shift+X)"
           style="width:100%;font-family:var(--font-pixel);font-size:8px;letter-spacing:1px;
-                 padding:5px 0;background:rgba(255,71,87,0.12);border:1px dashed var(--color-pixel-red);
-                 color:var(--color-pixel-red);cursor:pointer;opacity:0.65;transition:opacity 0.2s;"
+                 padding:5px 0;background:rgba(255,107,138,0.12);border:1px dashed var(--gba-red);
+                 color:var(--gba-red);cursor:pointer;opacity:0.65;transition:opacity 0.2s;"
           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.65'">
           ⏭ DEV: SKIP GAME
         </button>
-        <div style="font-family:var(--font-pixel);font-size:7px;color:var(--color-pixel-gray);
+        <div style="font-family:var(--font-pixel);font-size:7px;color:var(--gba-card-border);
                     letter-spacing:1px;text-align:center;margin-top:4px;">
           CTRL+SHIFT+X
         </div>
@@ -559,15 +615,15 @@
         <div style="max-width:760px;margin:0 auto;padding:28px 20px;">
           <div style="text-align:center;margin-bottom:18px;">
             <div style="font-size:44px;margin-bottom:6px;">🔒</div>
-            <h2 style="font-family:var(--font-pixel);font-size:20px;color:var(--color-pixel-yellow);letter-spacing:4px;margin-bottom:4px;">SYSTEM CHECK</h2>
-            <p style="font-family:var(--font-pixel);font-size:9px;color:var(--color-pixel-lightGray);letter-spacing:2px;">VERIFYING ENVIRONMENT BEFORE ASSESSMENT</p>
+            <h2 style="font-family:var(--font-pixel);font-size:20px;color:var(--gba-gold);letter-spacing:4px;margin-bottom:4px;">SYSTEM CHECK</h2>
+            <p style="font-family:var(--font-pixel);font-size:9px;color:var(--gba-text-dim);letter-spacing:2px;">VERIFYING ENVIRONMENT BEFORE ASSESSMENT</p>
           </div>
 
           <!-- Dino Runner (plays during loading) -->
           <div style="text-align:center;margin-bottom:16px;">
-            <div style="font-family:var(--font-pixel);font-size:8px;color:var(--color-pixel-gray);letter-spacing:2px;margin-bottom:5px;">MINI ARCADE — PRESS SPACE OR CLICK TO JUMP WHILE CHECKING...</div>
+            <div style="font-family:var(--font-pixel);font-size:8px;color:var(--gba-card-border);letter-spacing:2px;margin-bottom:5px;">MINI ARCADE — PRESS SPACE OR CLICK TO JUMP WHILE CHECKING...</div>
             <canvas id="dino-canvas" width="520" height="110"
-              style="border:3px solid var(--color-pixel-blue);background:#080814;max-width:100%;cursor:pointer;image-rendering:pixelated;display:block;margin:0 auto;"></canvas>
+              style="border:3px solid var(--gba-frame-mid);background:var(--gba-bg-deep);max-width:100%;cursor:pointer;image-rendering:pixelated;display:block;margin:0 auto;"></canvas>
           </div>
 
           <!-- Two-column layout: checks + device info -->
@@ -609,9 +665,9 @@
 
           <!-- Device info panel (right column) -->
           <div id="device-info-panel" style="display:none;min-width:210px;flex:0 0 210px;
-            background:rgba(0,0,0,0.4);border:2px solid var(--color-pixel-gray);padding:10px 12px;">
-            <div style="font-family:var(--font-pixel);font-size:8px;color:var(--color-pixel-blue);
-              letter-spacing:2px;margin-bottom:8px;border-bottom:2px solid var(--color-pixel-gray);padding-bottom:5px;">
+            background:rgba(0,0,0,0.4);border:2px solid var(--gba-card-border);padding:10px 12px;">
+            <div style="font-family:var(--font-pixel);font-size:8px;color:var(--gba-frame-mid);
+              letter-spacing:2px;margin-bottom:8px;border-bottom:2px solid var(--gba-card-border);padding-bottom:5px;">
               ▶ DEVICE SPECS
             </div>
             <!-- Populated by JS -->
@@ -624,7 +680,7 @@
             <button class="btn btn-primary" id="btn-share-screen" onclick="triggerScreenShare()" style="display:none;">
               📺 SHARE YOUR SCREEN
             </button>
-            <div id="share-hint" style="font-family:var(--font-pixel);font-size:9px;color:var(--color-pixel-lightGray);letter-spacing:1px;margin-top:6px;display:none;">
+            <div id="share-hint" style="font-family:var(--font-pixel);font-size:9px;color:var(--gba-text-dim);letter-spacing:1px;margin-top:6px;display:none;">
               SELECT YOUR ENTIRE SCREEN (NOT A WINDOW OR TAB)
             </div>
           </div>
@@ -634,12 +690,12 @@
             <button class="btn btn-success btn-lg" id="btn-proceed" onclick="proceedToAssessment()" style="display:none;">
               ▶ PROCEED TO ASSESSMENT
             </button>
-            <div id="check-note" style="font-family:var(--font-pixel);font-size:9px;color:var(--color-pixel-gray);letter-spacing:1px;margin-top:10px;display:none;">
+            <div id="check-note" style="font-family:var(--font-pixel);font-size:9px;color:var(--gba-card-border);letter-spacing:1px;margin-top:10px;display:none;">
               SOME CHECKS FAILED — SESSION WILL BE FLAGGED
             </div>
           </div>
 
-          <div id="init-status" style="font-family:var(--font-pixel);font-size:10px;color:var(--color-pixel-blue);letter-spacing:2px;text-align:center;margin-top:16px;">
+          <div id="init-status" style="font-family:var(--font-pixel);font-size:10px;color:var(--gba-frame-mid);letter-spacing:2px;text-align:center;margin-top:16px;">
             STARTING CHECKS...
           </div>
         </div>
@@ -648,20 +704,20 @@
           .check-item {
             display:flex; align-items:center; gap:12px;
             padding:10px 16px;
-            border:3px solid var(--color-pixel-gray);
+            border:3px solid var(--gba-card-border);
             background:rgba(0,0,0,0.3);
             font-family:var(--font-pixel); font-size:11px; letter-spacing:1px;
             transition:all 0.3s ease;
           }
-          .check-item.pass { border-color:var(--color-pixel-green); background:rgba(46,204,113,0.08); }
-          .check-item.fail { border-color:var(--color-pixel-red);   background:rgba(255,71,87,0.08); }
-          .check-item.warn { border-color:var(--color-pixel-yellow); background:rgba(255,211,42,0.08); }
+          .check-item.pass { border-color:var(--gba-green); background:rgba(61,220,132,0.08); }
+          .check-item.fail { border-color:var(--gba-red);   background:rgba(255,107,138,0.08); }
+          .check-item.warn { border-color:var(--gba-gold); background:rgba(255,215,0,0.08); }
           .chk-icon { font-size:16px; flex-shrink:0; }
-          .chk-label { flex:1; color:var(--color-pixel-lightGray); }
-          .chk-status { font-size:10px; color:var(--color-pixel-gray); }
-          .check-item.pass .chk-status { color:var(--color-pixel-green); }
-          .check-item.fail .chk-status { color:var(--color-pixel-red); }
-          .check-item.warn .chk-status { color:var(--color-pixel-yellow); }
+          .chk-label { flex:1; color:var(--gba-text-dim); }
+          .chk-status { font-size:10px; color:var(--gba-card-border); }
+          .check-item.pass .chk-status { color:var(--gba-green); }
+          .check-item.fail .chk-status { color:var(--gba-red); }
+          .check-item.warn .chk-status { color:var(--gba-gold); }
         </style>
       </div>
 
@@ -675,14 +731,14 @@
           <p id="intro-desc">Description</p>
         </div>
         <div class="game-panel" style="max-width:640px;">
-          <div style="font-family:var(--font-pixel);font-size:12px;color:var(--color-pixel-lightGray);letter-spacing:1px;margin-bottom:14px;">
+          <div style="font-family:var(--font-pixel);font-size:12px;color:var(--gba-text-dim);letter-spacing:1px;margin-bottom:14px;">
             📋 INSTRUCTIONS
           </div>
-          <div id="intro-instructions" class="instruction-box"></div>
+          <div id="intro-instructions" class="instruction-box" style="background-image:url('assets/games/faces/rules-panel.png');background-size:cover;background-position:center;background-repeat:no-repeat;background-blend-mode:overlay;image-rendering:pixelated;"></div>
           <div style="text-align:center; margin-top:20px;">
             <button class="btn btn-success btn-lg" id="btnBeginGame">▶ BEGIN GAME</button>
           </div>
-          <div style="font-family:var(--font-pixel);font-size:9px;color:var(--color-pixel-gray);letter-spacing:1px;margin-top:10px;text-align:center;">
+          <div style="font-family:var(--font-pixel);font-size:9px;color:var(--gba-card-border);letter-spacing:1px;margin-top:10px;text-align:center;">
             PRESS SPACE OR CLICK TO START
           </div>
         </div>
@@ -693,7 +749,7 @@
       <!-- ══════════════════════════════ -->
       <div class="game-screen" id="screen-lobby">
         <div class="lobby-wrap">
-          <div class="lobby-header">
+          <div class="lobby-header" style="background-image:url('assets/ui/gba-frame-small.png');background-size:cover;background-position:center;background-repeat:no-repeat;background-blend-mode:overlay;image-rendering:pixelated;">
             <div class="lobby-title">▶ MISSION SELECT ◀</div>
             <div class="lobby-subtitle">COMPLETE ALL 6 COGNITIVE ASSESSMENT GAMES IN ORDER</div>
           </div>
@@ -712,7 +768,7 @@
             </div>
             <div class="lobby-start-wrap">
               <button class="btn btn-success btn-lg" onclick="window.PymetricApp.startMission()"
-                style="font-size:15px;padding:14px 44px;letter-spacing:3px;">
+                style="font-size:15px;padding:14px 44px;letter-spacing:3px;background-image:url('assets/ui/btn-start.png');background-size:cover;background-position:center;background-repeat:no-repeat;image-rendering:pixelated;">
                 ▶ START ASSESSMENT
               </button>
               <div class="lobby-note">GAMES PLAYED IN SEQUENCE — NO SKIP ALLOWED</div>
@@ -732,7 +788,7 @@
           <div class="game-hud">
             <div>
               <div class="score-label">ROUND</div>
-              <div style="font-family:var(--font-pixel);font-size:18px;color:var(--color-pixel-white);" id="bal-round">1 / 3</div>
+              <div style="font-family:var(--font-pixel);font-size:18px;color:var(--gba-text);" id="bal-round">1 / 3</div>
             </div>
             <div style="text-align:center;">
               <div class="score-label">ROUND EARNINGS</div>
@@ -744,6 +800,9 @@
             </div>
           </div>
           <div class="balloon-container" id="balloon-area">
+            <!-- Pixel art balloon decoration -->
+            <img src="assets/games/balloon/balloon-red.png" alt="" class="balloon-pixel-art" style="position:absolute;top:8px;right:12px;width:40px;height:auto;image-rendering:pixelated;opacity:0.5;pointer-events:none;">
+            <img src="assets/games/balloon/balloon-gray.png" alt="" class="balloon-pixel-art" style="position:absolute;top:8px;left:12px;width:32px;height:auto;image-rendering:pixelated;opacity:0.35;pointer-events:none;">
             <svg id="balloon-svg" class="balloon-svg" width="160" height="200" viewBox="0 0 160 200" onclick="balloonPump()">
               <ellipse id="balloon-body" cx="80" cy="90" rx="60" ry="70" fill="#ff4757"/>
               <ellipse cx="60" cy="70" rx="15" ry="10" fill="rgba(255,255,255,0.25)"/>
@@ -751,7 +810,7 @@
               <polygon points="75,158 85,158 80,168" fill="#888"/>
             </svg>
             <div id="balloon-explosion-area"></div>
-            <div id="balloon-pump-count" style="position:absolute;top:10px;left:50%;transform:translateX(-50%);font-family:var(--font-pixel);font-size:11px;color:var(--color-pixel-lightGray);letter-spacing:1px;"></div>
+            <div id="balloon-pump-count" style="position:absolute;top:10px;left:50%;transform:translateX(-50%);font-family:var(--font-pixel);font-size:11px;color:var(--gba-text-dim);letter-spacing:1px;"></div>
           </div>
           <div style="display:flex;gap:12px;justify-content:center;margin-top:16px;">
             <button class="btn btn-danger btn-lg" id="btnPump" onclick="balloonPump()">💨 PUMP (+Rp 500)</button>
@@ -765,13 +824,16 @@
 
       <!-- GAME 2: TOWER -->
       <div class="game-screen" id="screen-game-2">
-        <div class="game-panel">
+        <div class="game-panel" style="position:relative;">
+          <!-- Decorative tower assets -->
+          <img src="assets/games/tower/tower-white.png" alt="" style="position:absolute;top:8px;right:8px;width:32px;height:auto;image-rendering:pixelated;opacity:0.15;pointer-events:none;">
+          <img src="assets/games/tower/disk-states.png" alt="" style="position:absolute;bottom:8px;left:8px;width:48px;height:auto;image-rendering:pixelated;opacity:0.12;pointer-events:none;">
           <div class="game-hud">
             <div><div class="score-label">MOVES</div><div class="score-display" id="tower-moves">0</div></div>
-            <div style="text-align:center;"><div class="score-label">OPTIMAL</div><div style="font-family:var(--font-pixel);font-size:18px;color:var(--color-pixel-purple);">31</div></div>
+            <div style="text-align:center;"><div class="score-label">OPTIMAL</div><div style="font-family:var(--font-pixel);font-size:18px;color:var(--gba-purple);">31</div></div>
             <div style="text-align:right;"><div class="score-label">TIME</div><div class="timer-display" id="tower-timer">0:00</div></div>
           </div>
-          <div id="tower-board" class="tower-board">
+          <div id="tower-board" class="tower-board" style="background-image:url('assets/games/tower/tower-blue.png');background-size:contain;background-position:center bottom;background-repeat:no-repeat;image-rendering:pixelated;background-blend-mode:overlay;">
             <!-- Pegs rendered by JS -->
           </div>
           <div id="tower-feedback" style="font-family:var(--font-pixel);font-size:11px;text-align:center;margin-top:12px;min-height:20px;letter-spacing:1px;"></div>
@@ -787,17 +849,17 @@
         <div class="game-panel">
           <div class="game-hud">
             <div><div class="score-label">TIME LEFT</div><div class="timer-display" id="kp-timer">30</div></div>
-            <div style="text-align:right;"><div class="score-label">PRESSES</div><div id="kp-count-display" style="font-family:var(--font-pixel);font-size:32px;color:var(--color-pixel-blue);">—</div></div>
+            <div style="text-align:right;"><div class="score-label">PRESSES</div><div id="kp-count-display" style="font-family:var(--font-pixel);font-size:32px;color:var(--gba-frame-mid);">—</div></div>
           </div>
           <div class="keypress-area" id="kp-area" tabindex="0">
             <div>
               <div class="keypress-icon">⌨️</div>
-              <div style="font-family:var(--font-pixel);font-size:14px;color:var(--color-pixel-lightGray);letter-spacing:2px;margin-top:8px;text-align:center;">
+              <div style="font-family:var(--font-pixel);font-size:14px;color:var(--gba-text-dim);letter-spacing:2px;margin-top:8px;text-align:center;">
                 PRESS SPACEBAR
               </div>
             </div>
           </div>
-          <div id="kp-feedback" style="font-family:var(--font-pixel);font-size:11px;text-align:center;margin-top:12px;min-height:20px;letter-spacing:1px;color:var(--color-pixel-lightGray);"></div>
+          <div id="kp-feedback" style="font-family:var(--font-pixel);font-size:11px;text-align:center;margin-top:12px;min-height:20px;letter-spacing:1px;color:var(--gba-text-dim);"></div>
         </div>
       </div>
 
@@ -807,12 +869,12 @@
           <div class="game-hud">
             <div><div class="score-label">ROUND</div><div style="font-family:var(--font-pixel);font-size:18px;" id="he-round">1 / 12</div></div>
             <div style="text-align:center;"><div class="score-label">EARNINGS</div><div class="money-display" id="he-earnings">$0.00</div></div>
-            <div style="text-align:right;"><div class="score-label">PHASE</div><div style="font-family:var(--font-pixel);font-size:14px;color:var(--color-pixel-cyan);" id="he-phase">CHOOSE</div></div>
+            <div style="text-align:right;"><div class="score-label">PHASE</div><div style="font-family:var(--font-pixel);font-size:14px;color:var(--gba-cyan);" id="he-phase">CHOOSE</div></div>
           </div>
 
           <!-- Phase: CHOOSE -->
           <div id="he-choose-phase">
-            <div style="font-family:var(--font-pixel);font-size:11px;color:var(--color-pixel-lightGray);letter-spacing:1px;text-align:center;margin-bottom:14px;">
+            <div style="font-family:var(--font-pixel);font-size:11px;color:var(--gba-text-dim);letter-spacing:1px;text-align:center;margin-bottom:14px;">
               SELECT YOUR TASK FOR THIS ROUND
             </div>
             <div class="task-choice-grid" id="he-choices"></div>
@@ -825,8 +887,8 @@
             </div>
             <div class="keypress-area" id="he-kp-area" tabindex="0" style="height:160px;">
               <div>
-                <div style="font-family:var(--font-pixel);font-size:13px;color:var(--color-pixel-lightGray);">PRESS SPACEBAR</div>
-                <div style="font-family:var(--font-pixel);font-size:11px;color:var(--color-pixel-gray);margin-top:4px;" id="he-kp-target"></div>
+                <div style="font-family:var(--font-pixel);font-size:13px;color:var(--gba-text-dim);">PRESS SPACEBAR</div>
+                <div style="font-family:var(--font-pixel);font-size:11px;color:var(--gba-card-border);margin-top:4px;" id="he-kp-target"></div>
               </div>
             </div>
             <div style="text-align:center;margin-top:8px;">
@@ -838,7 +900,7 @@
           <div id="he-result-phase" style="display:none;text-align:center;padding:20px;">
             <div id="he-result-icon" style="font-size:60px;margin-bottom:12px;"></div>
             <div id="he-result-text" style="font-family:var(--font-pixel);font-size:16px;letter-spacing:2px;margin-bottom:8px;"></div>
-            <div id="he-result-sub"  style="font-family:var(--font-retro);font-size:12px;color:var(--color-pixel-lightGray);margin-bottom:20px;"></div>
+            <div id="he-result-sub"  style="font-family:var(--font-retro);font-size:12px;color:var(--gba-text-dim);margin-bottom:20px;"></div>
             <button class="btn btn-primary" onclick="heNextRound()">▶ NEXT ROUND</button>
           </div>
 
@@ -851,10 +913,10 @@
         <div class="game-panel">
           <div class="game-hud">
             <div><div class="score-label">QUESTION</div><div style="font-family:var(--font-pixel);font-size:18px;" id="len-qnum">1 / 20</div></div>
-            <div style="text-align:center;"><div class="score-label">CORRECT</div><div style="font-family:var(--font-pixel);font-size:18px;color:var(--color-pixel-green);" id="len-correct">0</div></div>
-            <div style="text-align:right;"><div class="score-label">AVG TIME</div><div style="font-family:var(--font-pixel);font-size:14px;color:var(--color-pixel-cyan);" id="len-avgtime">—</div></div>
+            <div style="text-align:center;"><div class="score-label">CORRECT</div><div style="font-family:var(--font-pixel);font-size:18px;color:var(--gba-green);" id="len-correct">0</div></div>
+            <div style="text-align:right;"><div class="score-label">AVG TIME</div><div style="font-family:var(--font-pixel);font-size:14px;color:var(--gba-cyan);" id="len-avgtime">—</div></div>
           </div>
-          <div style="font-family:var(--font-pixel);font-size:12px;color:var(--color-pixel-lightGray);text-align:center;letter-spacing:2px;margin-bottom:16px;">
+          <div style="font-family:var(--font-pixel);font-size:12px;color:var(--gba-text-dim);text-align:center;letter-spacing:2px;margin-bottom:16px;">
             CLICK THE LONGER BAR
           </div>
           <div class="lengths-arena" id="len-arena">
@@ -869,13 +931,21 @@
         <div class="game-panel">
           <div class="game-hud">
             <div><div class="score-label">QUESTION</div><div style="font-family:var(--font-pixel);font-size:18px;" id="face-qnum">1 / 16</div></div>
-            <div style="text-align:center;"><div class="score-label">CORRECT</div><div style="font-family:var(--font-pixel);font-size:18px;color:var(--color-pixel-green);" id="face-correct">0</div></div>
-            <div style="text-align:right;"><div class="score-label">AVG TIME</div><div style="font-family:var(--font-pixel);font-size:14px;color:var(--color-pixel-cyan);" id="face-avgtime">—</div></div>
+            <div style="text-align:center;"><div class="score-label">CORRECT</div><div style="font-family:var(--font-pixel);font-size:18px;color:var(--gba-green);" id="face-correct">0</div></div>
+            <div style="text-align:right;"><div class="score-label">AVG TIME</div><div style="font-family:var(--font-pixel);font-size:14px;color:var(--gba-cyan);" id="face-avgtime">—</div></div>
           </div>
-          <div style="font-family:var(--font-pixel);font-size:12px;color:var(--color-pixel-lightGray);text-align:center;letter-spacing:2px;margin-bottom:16px;">
+          <div style="font-family:var(--font-pixel);font-size:12px;color:var(--gba-text-dim);text-align:center;letter-spacing:2px;margin-bottom:16px;position:relative;">
             IDENTIFY THE EMOTION
+            <img src="assets/games/faces/face-empty.png" alt="" style="position:absolute;right:-8px;top:-4px;width:24px;height:24px;image-rendering:pixelated;opacity:0.3;">
           </div>
           <div class="face-display" id="face-stimulus">😊</div>
+          <!-- Decorative pixel art face parts -->
+          <div style="display:flex;justify-content:center;gap:8px;margin-top:8px;opacity:0.2;">
+            <img src="assets/games/faces/eyebrow-l.png" alt="" style="width:20px;height:auto;image-rendering:pixelated;">
+            <img src="assets/games/faces/nose.png" alt="" style="width:16px;height:auto;image-rendering:pixelated;">
+            <img src="assets/games/faces/mouth.png" alt="" style="width:20px;height:auto;image-rendering:pixelated;">
+            <img src="assets/games/faces/eyebrow-r.png" alt="" style="width:20px;height:auto;image-rendering:pixelated;">
+          </div>
           <div class="emotion-choices" id="face-choices" style="margin-top:16px;"></div>
           <div id="face-feedback" style="font-family:var(--font-pixel);font-size:12px;text-align:center;min-height:20px;letter-spacing:1px;margin-top:10px;"></div>
         </div>
@@ -884,12 +954,16 @@
       <!-- ══════════════════════════════ -->
       <!-- FINAL RESULTS SCREEN         -->
       <!-- ══════════════════════════════ -->
-      <div class="game-screen" id="screen-done">
-        <div style="padding:20px;">
-          <div style="font-family:var(--font-pixel);font-size:40px;color:var(--color-pixel-green);text-align:center;margin-bottom:8px;letter-spacing:4px;text-shadow:0 0 20px rgba(46,204,113,0.5);">
+      <div class="game-screen" id="screen-done" style="position:relative;overflow:hidden;">
+        <!-- Finish screen background asset -->
+        <img src="assets/effects/finish-bg.png" alt="" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:480px;height:auto;opacity:0.12;image-rendering:pixelated;pointer-events:none;z-index:0;">
+        <!-- Finish screen stars overlay -->
+        <img src="assets/effects/finish-stars.png" alt="" style="position:absolute;top:10%;left:50%;transform:translateX(-50%);width:360px;height:auto;opacity:0.25;image-rendering:pixelated;pointer-events:none;z-index:0;animation:pulse 2.5s ease infinite;">
+        <div style="padding:20px;position:relative;z-index:1;">
+          <div style="font-family:var(--font-pixel);font-size:40px;color:var(--gba-green);text-align:center;margin-bottom:8px;letter-spacing:4px;text-shadow:0 0 20px rgba(61,220,132,0.5);">
             ASSESSMENT COMPLETE
           </div>
-          <div style="font-family:var(--font-pixel);font-size:12px;color:var(--color-pixel-lightGray);text-align:center;letter-spacing:3px;margin-bottom:30px;">
+          <div style="font-family:var(--font-pixel);font-size:12px;color:var(--gba-text-dim);text-align:center;letter-spacing:3px;margin-bottom:30px;">
             ALL GAMES FINISHED — RESULTS SAVED
           </div>
 
@@ -910,7 +984,7 @@
             <div class="card card-purple" style="margin-top:20px;" id="final-captures-card">
               <div class="card-title">📷 SESSION CAPTURES</div>
               <div class="card-body" id="final-captures">
-                <div style="font-family:var(--font-pixel);font-size:9px;color:var(--color-pixel-gray);letter-spacing:1px;">
+                <div style="font-family:var(--font-pixel);font-size:9px;color:var(--gba-card-border);letter-spacing:1px;">
                   LOADING CAPTURES...
                 </div>
               </div>
@@ -925,18 +999,18 @@
 
       <style>
         /* ── Captures gallery ── */
-        .card-purple { border-color: var(--color-pixel-purple) !important; }
-        .card-purple .card-title { color: var(--color-pixel-purple) !important; border-color: var(--color-pixel-purple) !important; }
+        .card-purple { border-color: var(--gba-purple) !important; }
+        .card-purple .card-title { color: var(--gba-purple) !important; border-color: var(--gba-purple) !important; }
 
         .capture-entry {
-          border: 2px solid var(--color-pixel-gray);
+          border: 2px solid var(--gba-card-border);
           background: rgba(0,0,0,0.4);
           padding: 10px 12px;
           margin-bottom: 14px;
         }
         .capture-header {
           font-family: var(--font-pixel); font-size: 8px;
-          color: var(--color-pixel-cyan); letter-spacing: 2px;
+          color: var(--gba-cyan); letter-spacing: 2px;
           margin-bottom: 8px;
           display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
         }
@@ -948,20 +1022,20 @@
         }
         .capture-img-label {
           font-family: var(--font-pixel); font-size: 7px;
-          color: var(--color-pixel-gray); letter-spacing: 1px;
+          color: var(--gba-card-border); letter-spacing: 1px;
         }
         .capture-img-wrap img {
-          border: 2px solid var(--color-pixel-gray);
+          border: 2px solid var(--gba-card-border);
           display: block; cursor: pointer;
           transition: border-color 0.2s;
           max-width: 100%;
         }
-        .capture-img-wrap img:hover { border-color: var(--color-pixel-yellow); }
+        .capture-img-wrap img:hover { border-color: var(--gba-gold); }
         .capture-img-wrap img.cam-thumb  { width: 160px; height: auto; }
         .capture-img-wrap img.scr-thumb  { width: 256px; height: auto; }
         .capture-no-data {
           font-family: var(--font-pixel); font-size: 8px;
-          color: var(--color-pixel-gray); letter-spacing: 1px;
+          color: var(--gba-card-border); letter-spacing: 1px;
           padding: 4px 0;
         }
 
@@ -974,20 +1048,20 @@
         #capture-lightbox.open { display: flex; }
         #capture-lightbox img {
           max-width: 90vw; max-height: 80vh;
-          border: 3px solid var(--color-pixel-yellow);
-          box-shadow: 0 0 40px rgba(255,211,42,0.3);
+          border: 3px solid var(--gba-gold);
+          box-shadow: 0 0 40px rgba(255,215,0,0.3);
         }
         #capture-lightbox-label {
           font-family: var(--font-pixel); font-size: 10px;
-          color: var(--color-pixel-yellow); letter-spacing: 2px;
+          color: var(--gba-gold); letter-spacing: 2px;
         }
         #capture-lightbox-close {
           font-family: var(--font-pixel); font-size: 11px;
-          color: var(--color-pixel-red); letter-spacing: 2px;
+          color: var(--gba-red); letter-spacing: 2px;
           cursor: pointer; padding: 6px 18px;
-          border: 2px solid var(--color-pixel-red); background: none;
+          border: 2px solid var(--gba-red); background: none;
         }
-        #capture-lightbox-close:hover { background: rgba(255,71,87,0.15); }
+        #capture-lightbox-close:hover { background: rgba(255,107,138,0.15); }
       </style>
 
       <!-- Lightbox overlay -->
@@ -1037,13 +1111,13 @@
   const GY = H - 14; // ground y
 
   // Palette
-  const BG  = '#080814';
-  const GRN = '#2ecc71';
-  const RED = '#ff4757';
-  const BLU = '#4169e1';
-  const YLW = '#ffd32a';
-  const GRY = '#adb5bd';
-  const DRK = '#1a1a2e';
+  const BG  = '#080c24';
+  const GRN = '#3ddc84';
+  const RED = '#ff6b8a';
+  const BLU = '#4a6cc0';
+  const YLW = '#ffd700';
+  const GRY = '#8898c0';
+  const DRK = '#0d1440';
 
   let alive   = true;
   let started = false;

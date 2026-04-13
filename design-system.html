@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PYMETRIC ARCADE — Design System</title>
+  <link rel="stylesheet" href="css/arcade.css"/>
+  <style>
+    body { padding-bottom: 60px; }
+    body::before { display: none; }
+
+    /* Nav */
+    .ds-nav { background: var(--gba-bg-deep); border-bottom: 4px solid var(--gba-frame-mid); padding: 10px 20px; position: sticky; top: 0; z-index: 9000; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+    .ds-nav a { font-family: var(--font-pixel); font-size: 9px; color: var(--gba-text-dim); letter-spacing: 1px; text-decoration: none; padding: 3px 8px; border: 2px solid transparent; transition: all 0.2s; }
+    .ds-nav a:hover { color: var(--gba-gold); border-color: var(--gba-gold); }
+
+    /* Section */
+    .ds-section { max-width: 1100px; margin: 28px auto; padding: 0 20px; }
+    .ds-section-title { font-family: var(--font-pixel); font-size: 16px; color: var(--gba-gold); letter-spacing: 3px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 4px solid var(--gba-card-border); }
+    .ds-section-title::before { content: '▶ '; }
+
+    /* Swatch grid */
+    .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+    .swatch { padding: 12px 10px; border: 2px solid var(--gba-card-border); font-family: var(--font-pixel); font-size: 8px; letter-spacing: 1px; }
+    .swatch-color { height: 40px; margin-bottom: 8px; border: 2px solid rgba(255,255,255,0.1); }
+    .swatch-label { color: var(--gba-text-dim); margin-bottom: 2px; }
+    .swatch-val { color: var(--gba-text-muted); font-family: var(--font-retro); font-size: 10px; }
+
+    /* Demo row */
+    .demo-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; margin-bottom: 16px; }
+    .demo-col { flex: 1; min-width: 200px; }
+    .demo-label { font-family: var(--font-pixel); font-size: 9px; color: var(--gba-text-muted); letter-spacing: 2px; margin-bottom: 8px; }
+
+    /* Asset grid */
+    .asset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+    .asset-item { background: var(--gba-card-bg); border: 2px solid var(--gba-card-border); padding: 10px; text-align: center; }
+    .asset-item img { max-width: 100%; height: auto; image-rendering: pixelated; margin-bottom: 6px; }
+    .asset-item-label { font-family: var(--font-pixel); font-size: 7px; color: var(--gba-text-muted); letter-spacing: 1px; word-break: break-all; }
+
+    /* Animation demo boxes */
+    .anim-box { width: 60px; height: 60px; background: var(--gba-frame-mid); border: 3px solid var(--gba-card-border); display: flex; align-items: center; justify-content: center; font-family: var(--font-pixel); font-size: 7px; color: var(--gba-text); letter-spacing: 1px; text-align: center; }
+
+    /* Inline modal demo */
+    .modal-demo { position: relative; min-height: 300px; background: rgba(8,12,36,0.9); display: flex; align-items: center; justify-content: center; border: 2px solid var(--gba-card-border); }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<div class="arcade-header">
+  <div class="arcade-logo">PYMETRIC ARCADE</div>
+  <div style="font-family:var(--font-pixel);font-size:10px;color:var(--gba-text-dim);letter-spacing:2px;">DESIGN SYSTEM v1.0</div>
+</div>
+
+<!-- ── NAVIGATION ── -->
+<nav class="ds-nav">
+  <a href="#colors">COLORS</a>
+  <a href="#typography">TYPE</a>
+  <a href="#buttons">BUTTONS</a>
+  <a href="#game-cards">GAME CARDS</a>
+  <a href="#badges">BADGES</a>
+  <a href="#alerts">ALERTS</a>
+  <a href="#forms">FORMS</a>
+  <a href="#progress">PROGRESS</a>
+  <a href="#cards">CARDS</a>
+  <a href="#task-choice">TASK CHOICE</a>
+  <a href="#playing-cards">PLAYING CARDS</a>
+  <a href="#tower">TOWER</a>
+  <a href="#faces">FACES</a>
+  <a href="#lengths">LENGTHS</a>
+  <a href="#keypress">KEYPRESS</a>
+  <a href="#feedback">FEEDBACK</a>
+  <a href="#timer-score">TIMER/SCORE</a>
+  <a href="#modals">MODALS</a>
+  <a href="#rules">RULES</a>
+  <a href="#animations">ANIMATIONS</a>
+  <a href="#glow">GLOW TEXT</a>
+  <a href="#assets">ASSETS</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     1. COLOR PALETTE
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="colors">
+  <div class="ds-section-title">COLOR PALETTE</div>
+
+  <div class="demo-label">BACKGROUNDS</div>
+  <div class="swatch-grid" style="margin-bottom:16px;">
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-bg-deep);"></div><div class="swatch-label">--gba-bg-deep</div><div class="swatch-val">#080c24</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-bg-mid);"></div><div class="swatch-label">--gba-bg-mid</div><div class="swatch-val">#0a0f2e</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-bg-light);"></div><div class="swatch-label">--gba-bg-light</div><div class="swatch-val">#0d1440</div></div>
+  </div>
+
+  <div class="demo-label">GBA FRAME</div>
+  <div class="swatch-grid" style="margin-bottom:16px;">
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-frame);"></div><div class="swatch-label">--gba-frame</div><div class="swatch-val">#3a5ba8</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-frame-mid);"></div><div class="swatch-label">--gba-frame-mid</div><div class="swatch-val">#4a6cc0</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-frame-light);"></div><div class="swatch-label">--gba-frame-light</div><div class="swatch-val">#5578c8</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-frame-hi);"></div><div class="swatch-label">--gba-frame-hi</div><div class="swatch-val">#7090d8</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-frame-hilight);"></div><div class="swatch-label">--gba-frame-hilight</div><div class="swatch-val">#8aa4e0</div></div>
+  </div>
+
+  <div class="demo-label">SCREEN</div>
+  <div class="swatch-grid" style="margin-bottom:16px;">
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-screen-bg);"></div><div class="swatch-label">--gba-screen-bg</div><div class="swatch-val">#0c1228</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-screen-content);"></div><div class="swatch-label">--gba-screen-content</div><div class="swatch-val">#162050</div></div>
+  </div>
+
+  <div class="demo-label">ACCENTS</div>
+  <div class="swatch-grid" style="margin-bottom:16px;">
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-gold);"></div><div class="swatch-label">--gba-gold</div><div class="swatch-val">#ffd700</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-green);"></div><div class="swatch-label">--gba-green</div><div class="swatch-val">#3ddc84</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-red);"></div><div class="swatch-label">--gba-red</div><div class="swatch-val">#ff6b8a</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-cyan);"></div><div class="swatch-label">--gba-cyan</div><div class="swatch-val">#40c8e0</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-orange);"></div><div class="swatch-label">--gba-orange</div><div class="swatch-val">#ff8c40</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-purple);"></div><div class="swatch-label">--gba-purple</div><div class="swatch-val">#9060d0</div></div>
+  </div>
+
+  <div class="demo-label">TEXT</div>
+  <div class="swatch-grid" style="margin-bottom:16px;">
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-text);"></div><div class="swatch-label">--gba-text</div><div class="swatch-val">#c8d4f0</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-text-mid);"></div><div class="swatch-label">--gba-text-mid</div><div class="swatch-val">#a0b0d8</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-text-dim);"></div><div class="swatch-label">--gba-text-dim</div><div class="swatch-val">#8898c0</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-text-muted);"></div><div class="swatch-label">--gba-text-muted</div><div class="swatch-val">#607098</div></div>
+  </div>
+
+  <div class="demo-label">CARDS</div>
+  <div class="swatch-grid" style="margin-bottom:16px;">
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-card-border);"></div><div class="swatch-label">--gba-card-border</div><div class="swatch-val">#2840a0</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-card-bg);"></div><div class="swatch-label">--gba-card-bg</div><div class="swatch-val">#101840</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--gba-card-bg-hi);"></div><div class="swatch-label">--gba-card-bg-hi</div><div class="swatch-val">#182050</div></div>
+  </div>
+
+  <div class="demo-label">TOWER DISK COLORS</div>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="swatch-color" style="background:var(--disk-red);"></div><div class="swatch-label">--disk-red</div><div class="swatch-val">#c03050</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--disk-olive);"></div><div class="swatch-label">--disk-olive</div><div class="swatch-val">#808020</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--disk-green);"></div><div class="swatch-label">--disk-green</div><div class="swatch-val">#30a050</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--disk-blue);"></div><div class="swatch-label">--disk-blue</div><div class="swatch-val">#3060d0</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--disk-purple);"></div><div class="swatch-label">--disk-purple</div><div class="swatch-val">#8030c0</div></div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     2. TYPOGRAPHY
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="typography">
+  <div class="ds-section-title">TYPOGRAPHY</div>
+  <h1>Heading 1 — Silkscreen 24px</h1>
+  <h2 style="margin-top:12px;">Heading 2 — Silkscreen 18px</h2>
+  <h3 style="margin-top:12px;">Heading 3 — Silkscreen 14px</h3>
+  <p style="margin-top:12px;">Body text — Share Tech Mono (default). Used for descriptions and longer content. The quick brown fox jumps over the lazy dog.</p>
+  <p style="margin-top:12px;" class="font-pixel">Pixel font class (.font-pixel) — Silkscreen</p>
+  <p style="margin-top:8px;" class="font-retro">Retro font class (.font-retro) — Share Tech Mono</p>
+  <h2 class="star-title" style="margin-top:16px;">Star Title</h2>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     3. BUTTONS
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="buttons">
+  <div class="ds-section-title">BUTTONS</div>
+
+  <div class="demo-label">VARIANTS</div>
+  <div class="demo-row">
+    <button class="btn btn-primary">PRIMARY</button>
+    <button class="btn btn-secondary">SECONDARY</button>
+    <button class="btn btn-danger">DANGER</button>
+    <button class="btn btn-success">SUCCESS</button>
+    <button class="btn btn-warning">WARNING</button>
+    <button class="btn btn-purple">PURPLE</button>
+    <button class="btn btn-orange">ORANGE</button>
+    <button class="btn btn-cyan">CYAN</button>
+  </div>
+
+  <div class="demo-label">SIZES</div>
+  <div class="demo-row">
+    <button class="btn btn-primary btn-lg">LARGE</button>
+    <button class="btn btn-primary">DEFAULT</button>
+    <button class="btn btn-primary btn-sm">SMALL</button>
+    <button class="btn btn-primary" disabled>DISABLED</button>
+  </div>
+
+  <div class="demo-label">START BUTTON</div>
+  <div style="text-align:center;padding:20px 0;">
+    <button class="btn-start">START GAME</button>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     4. GAME CARDS
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="game-cards">
+  <div class="ds-section-title">GAME CARDS</div>
+  <div class="games-grid">
+    <div class="game-card next-up">
+      <div class="game-card-top">
+        <div class="game-icon">🎈</div>
+        <div><div class="game-name">BALLOON</div><div class="game-tags"><span class="badge badge-red">RISK</span></div></div>
+        <div class="game-num">#1</div>
+      </div>
+      <div class="game-body"><div class="game-desc">Next up — blue glow pulse state</div></div>
+    </div>
+    <div class="game-card done">
+      <div class="game-card-top">
+        <div class="game-icon">🗼</div>
+        <div><div class="game-name">TOWER</div><div class="game-tags"><span class="badge badge-purple">PLANNING</span></div></div>
+        <div class="game-num">#2</div>
+      </div>
+      <div class="game-body"><div class="game-desc">Completed — green border + checkmark</div></div>
+    </div>
+    <div class="game-card locked">
+      <div class="game-card-top">
+        <div class="game-icon">⌨️</div>
+        <div><div class="game-name">KEYPRESS</div><div class="game-tags"><span class="badge badge-blue">SPEED</span></div></div>
+        <div class="game-num">#3</div>
+      </div>
+      <div class="game-body"><div class="game-desc">Locked — dimmed + no interaction</div></div>
+    </div>
+    <div class="game-card active">
+      <div class="game-card-top">
+        <div class="game-icon">⚖️</div>
+        <div><div class="game-name">HARD/EASY</div><div class="game-tags"><span class="badge badge-yellow">MOTIVATION</span></div></div>
+        <div class="game-num">#4</div>
+      </div>
+      <div class="game-body"><div class="game-desc">Active — gold border state</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     5. BADGES
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="badges">
+  <div class="ds-section-title">BADGES</div>
+  <div class="demo-row">
+    <span class="badge badge-blue">BLUE</span>
+    <span class="badge badge-green">GREEN</span>
+    <span class="badge badge-red">RED</span>
+    <span class="badge badge-yellow">YELLOW</span>
+    <span class="badge badge-purple">PURPLE</span>
+    <span class="badge badge-cyan">CYAN</span>
+    <span class="badge badge-orange">ORANGE</span>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     6. ALERTS
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="alerts">
+  <div class="ds-section-title">ALERTS</div>
+  <div class="alert alert-danger">DANGER — Session terminated due to violations.</div>
+  <div class="alert alert-warning">WARNING — Tab switch detected. Return to assessment.</div>
+  <div class="alert alert-success">SUCCESS — All system checks passed!</div>
+  <div class="alert alert-info">INFO — Assessment will begin shortly.</div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     7. FORM INPUTS
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="forms">
+  <div class="ds-section-title">FORM INPUTS</div>
+  <div class="form-section">
+    <div class="form-title">PLAYER REGISTRATION</div>
+    <div class="form-group">
+      <label class="form-label">FULL NAME</label>
+      <input type="text" class="form-input" placeholder="Enter your name...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">PLAYER ID</label>
+      <input type="text" class="form-input" placeholder="e.g. STU-001">
+    </div>
+    <div class="form-group">
+      <label class="form-label">ROLE</label>
+      <input type="text" class="form-input" placeholder="Student / Applicant">
+    </div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     8. PROGRESS BAR
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="progress">
+  <div class="ds-section-title">PROGRESS BAR</div>
+  <div class="demo-label">0%</div>
+  <div class="progress-bar-wrap" style="margin-bottom:12px;"><div class="progress-bar-fill" style="width:0%;"></div></div>
+  <div class="demo-label">25%</div>
+  <div class="progress-bar-wrap" style="margin-bottom:12px;"><div class="progress-bar-fill" style="width:25%;"></div></div>
+  <div class="demo-label">50%</div>
+  <div class="progress-bar-wrap" style="margin-bottom:12px;"><div class="progress-bar-fill" style="width:50%;"></div></div>
+  <div class="demo-label">75%</div>
+  <div class="progress-bar-wrap" style="margin-bottom:12px;"><div class="progress-bar-fill" style="width:75%;"></div></div>
+  <div class="demo-label">100%</div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:100%;"></div></div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     9. CARDS
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="cards">
+  <div class="ds-section-title">GENERIC CARDS</div>
+  <div class="demo-row">
+    <div class="card" style="flex:1;min-width:200px;">
+      <div class="card-title">DEFAULT CARD</div>
+      <div class="card-body">Card body content here.</div>
+      <div class="card-footer" style="font-size:11px;color:var(--gba-text-muted);">Card footer</div>
+    </div>
+    <div class="card card-blue" style="flex:1;min-width:200px;">
+      <div class="card-title">BLUE CARD</div>
+      <div class="card-body">With blue glow border.</div>
+    </div>
+    <div class="card card-green" style="flex:1;min-width:200px;">
+      <div class="card-title">GREEN CARD</div>
+      <div class="card-body">With green glow border.</div>
+    </div>
+    <div class="card card-red" style="flex:1;min-width:200px;">
+      <div class="card-title">RED CARD</div>
+      <div class="card-body">With red glow border.</div>
+    </div>
+    <div class="card card-yellow" style="flex:1;min-width:200px;">
+      <div class="card-title">YELLOW CARD</div>
+      <div class="card-body">With yellow glow border.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     10. TASK CHOICE CARDS
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="task-choice">
+  <div class="ds-section-title">TASK CHOICE CARDS (HARD/EASY)</div>
+  <div class="task-choice-grid" style="max-width:600px;">
+    <div class="task-choice-card easy">
+      <div class="task-name">EASY TASK</div>
+      <div class="task-reward">$1.00</div>
+      <div class="task-prob">100% CHANCE</div>
+    </div>
+    <div class="task-choice-card hard">
+      <div class="task-name">HARD TASK</div>
+      <div class="task-reward">$4.30</div>
+      <div class="task-prob">50% CHANCE</div>
+    </div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     11. PLAYING CARDS
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="playing-cards">
+  <div class="ds-section-title">PLAYING CARDS</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:500px;">
+    <div class="playing-card card-a"><div style="font-size:24px;">A</div><div style="font-size:10px;margin-top:4px;">CARD A</div></div>
+    <div class="playing-card card-b"><div style="font-size:24px;">B</div><div style="font-size:10px;margin-top:4px;">CARD B</div></div>
+    <div class="playing-card card-c"><div style="font-size:24px;">C</div><div style="font-size:10px;margin-top:4px;">CARD C</div></div>
+    <div class="playing-card card-d"><div style="font-size:24px;">D</div><div style="font-size:10px;margin-top:4px;">CARD D</div></div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     12. TOWER COMPONENTS
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="tower">
+  <div class="ds-section-title">TOWER OF HANOI</div>
+  <div class="tower-board" style="max-width:600px;margin:0 auto 20px;">
+    <div class="tower-peg">
+      <div class="disk disk-1" style="width:40px;"></div>
+      <div class="disk disk-2" style="width:55px;"></div>
+      <div class="disk disk-3" style="width:70px;"></div>
+      <div class="disk disk-4" style="width:85px;"></div>
+      <div class="disk disk-5" style="width:100px;"></div>
+    </div>
+    <div class="tower-peg selected"></div>
+    <div class="tower-peg"></div>
+  </div>
+  <div class="demo-label">INDIVIDUAL DISKS</div>
+  <div class="demo-row" style="gap:8px;">
+    <div class="disk disk-1" style="width:40px;"></div>
+    <div class="disk disk-2" style="width:55px;"></div>
+    <div class="disk disk-3" style="width:70px;"></div>
+    <div class="disk disk-4" style="width:85px;"></div>
+    <div class="disk disk-5" style="width:100px;"></div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     13. FACE PANELS
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="faces">
+  <div class="ds-section-title">FACE PANELS</div>
+  <div class="face-panel-container" style="max-width:600px;">
+    <div class="face-panel face-panel--left">
+      <div class="face-panel-label">TARGET</div>
+      <div class="face-display">😊</div>
+    </div>
+    <div class="face-panel face-panel--right">
+      <div class="face-panel-label">REFERENCE</div>
+      <div class="face-display">😢</div>
+    </div>
+  </div>
+  <div class="demo-label" style="margin-top:16px;">EMOTION CHOICES</div>
+  <div class="emotion-choices" style="max-width:500px;">
+    <div class="emotion-btn">Happy</div>
+    <div class="emotion-btn">Sad</div>
+    <div class="emotion-btn">Angry</div>
+    <div class="emotion-btn">Surprise</div>
+    <div class="emotion-btn">Fear</div>
+    <div class="emotion-btn">Disgust</div>
+    <div class="emotion-btn">Neutral</div>
+    <div class="emotion-btn">Contempt</div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     14. LENGTH BARS
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="lengths">
+  <div class="ds-section-title">LENGTH COMPARISON BARS</div>
+  <div class="lengths-arena" style="max-width:600px;margin:0 auto;">
+    <div class="length-bar-wrap"><div class="length-bar-label">A</div><div class="length-bar" style="width:75%;"></div></div>
+    <div class="length-bar-wrap"><div class="length-bar-label">B</div><div class="length-bar" style="width:60%;"></div></div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     15. KEYPRESS AREA
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="keypress">
+  <div class="ds-section-title">KEYPRESS AREA</div>
+  <div class="keypress-area" style="max-width:500px;margin:0 auto;" onclick="this.classList.toggle('pressed')">
+    <div>
+      <div class="keypress-icon">⌨️</div>
+      <div style="font-family:var(--font-pixel);font-size:12px;color:var(--gba-text-dim);letter-spacing:2px;margin-top:8px;text-align:center;">CLICK TO TOGGLE PRESSED</div>
+    </div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     16. ANSWER FEEDBACK
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="feedback">
+  <div class="ds-section-title">ANSWER FEEDBACK STATES</div>
+  <div class="demo-row">
+    <button class="btn btn-primary">Normal</button>
+    <button class="btn btn-primary answer-correct">Correct</button>
+    <button class="btn btn-primary answer-wrong">Wrong</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:400px;margin-top:16px;">
+    <div class="playing-card card-a">Normal</div>
+    <div class="playing-card card-b answer-correct">Correct</div>
+    <div class="playing-card card-c answer-wrong">Wrong</div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     17. TIMER & SCORE
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="timer-score">
+  <div class="ds-section-title">TIMER & SCORE DISPLAYS</div>
+  <div class="demo-row">
+    <div>
+      <div class="demo-label">TIMER (NORMAL)</div>
+      <div class="timer-display">2:45</div>
+    </div>
+    <div>
+      <div class="demo-label">TIMER (WARNING)</div>
+      <div class="timer-display warning">0:30</div>
+    </div>
+    <div>
+      <div class="demo-label">TIMER (CRITICAL)</div>
+      <div class="timer-display critical">0:05</div>
+    </div>
+  </div>
+  <div class="demo-row" style="margin-top:16px;">
+    <div>
+      <div class="score-label">SCORE</div>
+      <div class="score-display">1,250</div>
+    </div>
+    <div>
+      <div class="score-label">MONEY EARNED</div>
+      <div class="money-display">Rp 15,000</div>
+    </div>
+    <div>
+      <div class="score-label">MONEY LOST</div>
+      <div class="money-display money-lost">-Rp 5,000</div>
+    </div>
+    <div>
+      <div class="score-label">MONEY GAINED</div>
+      <div class="money-display money-gained">+Rp 500</div>
+    </div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     18. MODALS
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="modals">
+  <div class="ds-section-title">MODAL</div>
+  <div class="modal-demo">
+    <div class="modal-box" style="position:relative;">
+      <div class="modal-title">CONFIRM ACTION</div>
+      <p style="color:var(--gba-text-dim);margin-bottom:16px;">Are you sure you want to proceed? This action cannot be undone.</p>
+      <div class="demo-row">
+        <button class="btn btn-success">CONFIRM</button>
+        <button class="btn btn-danger">CANCEL</button>
+      </div>
+      <div class="modal-close">X</div>
+    </div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     19. RULES PANEL
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="rules">
+  <div class="ds-section-title">RULES / INSTRUCTIONS</div>
+  <div class="rules-panel" style="max-width:600px;">
+    <h4>HOW TO PLAY</h4>
+    <p>1. Click the balloon to pump it up and earn money.<br>
+    2. Each pump adds Rp 500 but increases pop risk.<br>
+    3. Click SAVE to bank your earnings before it pops.<br>
+    4. If it pops, you lose all earnings for that round.</p>
+  </div>
+  <div class="instruction-box" style="max-width:600px;">
+    <h4>SYSTEM REQUIREMENTS</h4>
+    <p>Camera access required. Browser must support Visibility API. Fullscreen mode will be activated during the assessment.</p>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     20. ANIMATIONS
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="animations">
+  <div class="ds-section-title">ANIMATION UTILITIES</div>
+  <div class="demo-row" style="gap:16px;">
+    <div class="anim-box anim-pulse">PULSE</div>
+    <div class="anim-box anim-glow">GLOW</div>
+    <div class="anim-box anim-float">FLOAT</div>
+    <div class="anim-box anim-blink">BLINK</div>
+    <div class="anim-box anim-twinkle">TWINKLE</div>
+    <div class="anim-box anim-shake">SHAKE</div>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     21. GLOWING TEXT
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="glow">
+  <div class="ds-section-title">GLOWING TEXT</div>
+  <div class="demo-row" style="gap:20px;">
+    <span class="glow-text-blue font-pixel" style="font-size:18px;">BLUE GLOW</span>
+    <span class="glow-text-green font-pixel" style="font-size:18px;">GREEN GLOW</span>
+    <span class="glow-text-red font-pixel" style="font-size:18px;">RED GLOW</span>
+    <span class="glow-text-yellow font-pixel" style="font-size:18px;">YELLOW GLOW</span>
+  </div>
+</section>
+
+<hr class="pixel-divider" style="max-width:1100px;margin:0 auto;">
+
+<!-- ═══════════════════════════════════════════
+     22. ASSET GALLERY
+═══════════════════════════════════════════ -->
+<section class="ds-section" id="assets">
+  <div class="ds-section-title">ASSET GALLERY</div>
+
+  <div class="demo-label">UI ASSETS</div>
+  <div class="asset-grid" style="margin-bottom:20px;">
+    <div class="asset-item"><img src="assets/ui/background.png" alt="background"><div class="asset-item-label">background.png</div></div>
+    <div class="asset-item"><img src="assets/ui/gba-frame.png" alt="gba-frame"><div class="asset-item-label">gba-frame.png</div></div>
+    <div class="asset-item"><img src="assets/ui/gba-frame-small.png" alt="gba-frame-small"><div class="asset-item-label">gba-frame-small.png</div></div>
+    <div class="asset-item"><img src="assets/ui/btn-start.png" alt="btn-start"><div class="asset-item-label">btn-start.png</div></div>
+    <div class="asset-item"><img src="assets/ui/card-completed.png" alt="card-completed"><div class="asset-item-label">card-completed.png</div></div>
+    <div class="asset-item"><img src="assets/ui/card-locked.png" alt="card-locked"><div class="asset-item-label">card-locked.png</div></div>
+    <div class="asset-item"><img src="assets/ui/card-next.png" alt="card-next"><div class="asset-item-label">card-next.png</div></div>
+    <div class="asset-item"><img src="assets/ui/answer-correct.png" alt="answer-correct"><div class="asset-item-label">answer-correct.png</div></div>
+    <div class="asset-item"><img src="assets/ui/answer-wrong-selected.png" alt="answer-wrong-selected"><div class="asset-item-label">answer-wrong-selected.png</div></div>
+    <div class="asset-item"><img src="assets/ui/answer-wrong-unselected.png" alt="answer-wrong-unselected"><div class="asset-item-label">answer-wrong-unselected.png</div></div>
+    <div class="asset-item"><img src="assets/ui/scrollable-content.png" alt="scrollable-content"><div class="asset-item-label">scrollable-content.png</div></div>
+  </div>
+
+  <div class="demo-label">BUTTON STATES</div>
+  <div class="asset-grid" style="margin-bottom:20px;">
+    <div class="asset-item"><img src="assets/ui/btn-default-1.png" alt="btn-default-1"><div class="asset-item-label">btn-default-1.png</div></div>
+    <div class="asset-item"><img src="assets/ui/btn-default-2.png" alt="btn-default-2"><div class="asset-item-label">btn-default-2.png</div></div>
+    <div class="asset-item"><img src="assets/ui/btn-default-3.png" alt="btn-default-3"><div class="asset-item-label">btn-default-3.png</div></div>
+    <div class="asset-item"><img src="assets/ui/btn-default-4.png" alt="btn-default-4"><div class="asset-item-label">btn-default-4.png</div></div>
+    <div class="asset-item"><img src="assets/ui/btn-hover.png" alt="btn-hover"><div class="asset-item-label">btn-hover.png</div></div>
+    <div class="asset-item"><img src="assets/ui/btn-hover-1.png" alt="btn-hover-1"><div class="asset-item-label">btn-hover-1.png</div></div>
+    <div class="asset-item"><img src="assets/ui/btn-pressed.png" alt="btn-pressed"><div class="asset-item-label">btn-pressed.png</div></div>
+    <div class="asset-item"><img src="assets/ui/btn-pressed-1.png" alt="btn-pressed-1"><div class="asset-item-label">btn-pressed-1.png</div></div>
+    <div class="asset-item"><img src="assets/ui/btn-selected.png" alt="btn-selected"><div class="asset-item-label">btn-selected.png</div></div>
+    <div class="asset-item"><img src="assets/ui/btn-selected-1.png" alt="btn-selected-1"><div class="asset-item-label">btn-selected-1.png</div></div>
+  </div>
+
+  <div class="demo-label">GAMELIST PREVIEWS</div>
+  <div class="asset-grid" style="margin-bottom:20px;">
+    <div class="asset-item"><img src="assets/ui/gamelist-balloon.png" alt="gamelist-balloon"><div class="asset-item-label">gamelist-balloon.png</div></div>
+    <div class="asset-item"><img src="assets/ui/gamelist-cards.png" alt="gamelist-cards"><div class="asset-item-label">gamelist-cards.png</div></div>
+    <div class="asset-item"><img src="assets/ui/gamelist-faces.png" alt="gamelist-faces"><div class="asset-item-label">gamelist-faces.png</div></div>
+    <div class="asset-item"><img src="assets/ui/gamelist-keypress.png" alt="gamelist-keypress"><div class="asset-item-label">gamelist-keypress.png</div></div>
+    <div class="asset-item"><img src="assets/ui/gamelist-tower.png" alt="gamelist-tower"><div class="asset-item-label">gamelist-tower.png</div></div>
+  </div>
+
+  <div class="demo-label">BALLOON GAME</div>
+  <div class="asset-grid" style="margin-bottom:20px;">
+    <div class="asset-item"><img src="assets/games/balloon/balloon-red.png" alt="balloon-red"><div class="asset-item-label">balloon-red.png</div></div>
+    <div class="asset-item"><img src="assets/games/balloon/balloon-gray.png" alt="balloon-gray"><div class="asset-item-label">balloon-gray.png</div></div>
+  </div>
+
+  <div class="demo-label">PLAYING CARDS GAME</div>
+  <div class="asset-grid" style="margin-bottom:20px;">
+    <div class="asset-item"><img src="assets/games/cards/card-a.png" alt="card-a"><div class="asset-item-label">card-a.png</div></div>
+    <div class="asset-item"><img src="assets/games/cards/card-b.png" alt="card-b"><div class="asset-item-label">card-b.png</div></div>
+    <div class="asset-item"><img src="assets/games/cards/card-c.png" alt="card-c"><div class="asset-item-label">card-c.png</div></div>
+    <div class="asset-item"><img src="assets/games/cards/card-d.png" alt="card-d"><div class="asset-item-label">card-d.png</div></div>
+  </div>
+
+  <div class="demo-label">TOWER GAME</div>
+  <div class="asset-grid" style="margin-bottom:20px;">
+    <div class="asset-item"><img src="assets/games/tower/peg.png" alt="peg"><div class="asset-item-label">peg.png</div></div>
+    <div class="asset-item"><img src="assets/games/tower/disk-1.png" alt="disk-1"><div class="asset-item-label">disk-1.png</div></div>
+    <div class="asset-item"><img src="assets/games/tower/disk-2.png" alt="disk-2"><div class="asset-item-label">disk-2.png</div></div>
+    <div class="asset-item"><img src="assets/games/tower/disk-3.png" alt="disk-3"><div class="asset-item-label">disk-3.png</div></div>
+    <div class="asset-item"><img src="assets/games/tower/disk-4.png" alt="disk-4"><div class="asset-item-label">disk-4.png</div></div>
+    <div class="asset-item"><img src="assets/games/tower/disk-5.png" alt="disk-5"><div class="asset-item-label">disk-5.png</div></div>
+    <div class="asset-item"><img src="assets/games/tower/disk-states.png" alt="disk-states"><div class="asset-item-label">disk-states.png</div></div>
+    <div class="asset-item"><img src="assets/games/tower/tower-blue.png" alt="tower-blue"><div class="asset-item-label">tower-blue.png</div></div>
+    <div class="asset-item"><img src="assets/games/tower/tower-white.png" alt="tower-white"><div class="asset-item-label">tower-white.png</div></div>
+  </div>
+
+  <div class="demo-label">FACES GAME</div>
+  <div class="asset-grid" style="margin-bottom:20px;">
+    <div class="asset-item"><img src="assets/games/faces/face-sample.png" alt="face-sample"><div class="asset-item-label">face-sample.png</div></div>
+    <div class="asset-item"><img src="assets/games/faces/face-empty.png" alt="face-empty"><div class="asset-item-label">face-empty.png</div></div>
+    <div class="asset-item"><img src="assets/games/faces/panel-left.png" alt="panel-left"><div class="asset-item-label">panel-left.png</div></div>
+    <div class="asset-item"><img src="assets/games/faces/panel-right.png" alt="panel-right"><div class="asset-item-label">panel-right.png</div></div>
+    <div class="asset-item"><img src="assets/games/faces/face-panel-blue.png" alt="face-panel-blue"><div class="asset-item-label">face-panel-blue.png</div></div>
+    <div class="asset-item"><img src="assets/games/faces/face-panel-green.png" alt="face-panel-green"><div class="asset-item-label">face-panel-green.png</div></div>
+    <div class="asset-item"><img src="assets/games/faces/face-panel-selected.png" alt="face-panel-selected"><div class="asset-item-label">face-panel-selected.png</div></div>
+    <div class="asset-item"><img src="assets/games/faces/eyebrow-l.png" alt="eyebrow-l"><div class="asset-item-label">eyebrow-l.png</div></div>
+    <div class="asset-item"><img src="assets/games/faces/eyebrow-r.png" alt="eyebrow-r"><div class="asset-item-label">eyebrow-r.png</div></div>
+    <div class="asset-item"><img src="assets/games/faces/mouth.png" alt="mouth"><div class="asset-item-label">mouth.png</div></div>
+    <div class="asset-item"><img src="assets/games/faces/nose.png" alt="nose"><div class="asset-item-label">nose.png</div></div>
+    <div class="asset-item"><img src="assets/games/faces/rules-panel.png" alt="rules-panel"><div class="asset-item-label">rules-panel.png</div></div>
+  </div>
+
+  <div class="demo-label">HARD/EASY GAME</div>
+  <div class="asset-grid" style="margin-bottom:20px;">
+    <div class="asset-item"><img src="assets/games/hardeasy/hard-task.png" alt="hard-task"><div class="asset-item-label">hard-task.png</div></div>
+    <div class="asset-item"><img src="assets/games/hardeasy/easy-task.png" alt="easy-task"><div class="asset-item-label">easy-task.png</div></div>
+    <div class="asset-item"><img src="assets/games/hardeasy/hard-default.png" alt="hard-default"><div class="asset-item-label">hard-default.png</div></div>
+    <div class="asset-item"><img src="assets/games/hardeasy/easy-default.png" alt="easy-default"><div class="asset-item-label">easy-default.png</div></div>
+  </div>
+
+  <div class="demo-label">LENGTHS GAME</div>
+  <div class="asset-grid" style="margin-bottom:20px;">
+    <div class="asset-item"><img src="assets/games/lengths/line-a.png" alt="line-a"><div class="asset-item-label">line-a.png</div></div>
+    <div class="asset-item"><img src="assets/games/lengths/line-b.png" alt="line-b"><div class="asset-item-label">line-b.png</div></div>
+    <div class="asset-item"><img src="assets/games/lengths/line-c.png" alt="line-c"><div class="asset-item-label">line-c.png</div></div>
+    <div class="asset-item"><img src="assets/games/lengths/line-d.png" alt="line-d"><div class="asset-item-label">line-d.png</div></div>
+  </div>
+
+  <div class="demo-label">EFFECTS</div>
+  <div class="asset-grid" style="margin-bottom:20px;">
+    <div class="asset-item"><img src="assets/effects/finish-bg.png" alt="finish-bg"><div class="asset-item-label">finish-bg.png</div></div>
+    <div class="asset-item"><img src="assets/effects/finish-stars.png" alt="finish-stars"><div class="asset-item-label">finish-stars.png</div></div>
+  </div>
+
+  <div class="demo-label">ICONS</div>
+  <div class="asset-grid">
+    <div class="asset-item"><img src="assets/icons/union-2.png" alt="union-2"><div class="asset-item-label">union-2.png</div></div>
+    <div class="asset-item"><img src="assets/icons/union-3.png" alt="union-3"><div class="asset-item-label">union-3.png</div></div>
+    <div class="asset-item"><img src="assets/icons/union-4.png" alt="union-4"><div class="asset-item-label">union-4.png</div></div>
+    <div class="asset-item"><img src="assets/icons/union-5.png" alt="union-5"><div class="asset-item-label">union-5.png</div></div>
+    <div class="asset-item"><img src="assets/icons/union-6.png" alt="union-6"><div class="asset-item-label">union-6.png</div></div>
+    <div class="asset-item"><img src="assets/icons/union-7.png" alt="union-7"><div class="asset-item-label">union-7.png</div></div>
+    <div class="asset-item"><img src="assets/icons/union-8.png" alt="union-8"><div class="asset-item-label">union-8.png</div></div>
+    <div class="asset-item"><img src="assets/icons/union-9.png" alt="union-9"><div class="asset-item-label">union-9.png</div></div>
+    <div class="asset-item"><img src="assets/icons/union-10.png" alt="union-10"><div class="asset-item-label">union-10.png</div></div>
+    <div class="asset-item"><img src="assets/icons/union-11.png" alt="union-11"><div class="asset-item-label">union-11.png</div></div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<div class="arcade-footer" style="margin-top:40px;">PYMETRIC ARCADE DESIGN SYSTEM — ALL COMPONENTS</div>
+
+</body>
+</html>

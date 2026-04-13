@@ -22,7 +22,7 @@ window.HardEasyGame = (function () {
       duration: 10,
       reward: 0.30,
       successProb: 0.80,
-      color: 'var(--color-pixel-green)',
+      color: 'var(--gba-green)',
       icon: '😊'
     },
     hard: {
@@ -31,7 +31,7 @@ window.HardEasyGame = (function () {
       duration: 10,
       reward: 2.00,
       successProb: 0.30,
-      color: 'var(--color-pixel-red)',
+      color: 'var(--gba-red)',
       icon: '💪'
     }
   };
@@ -75,8 +75,17 @@ window.HardEasyGame = (function () {
 
     ['easy', 'hard'].forEach(type => {
       const task = TASKS[type];
+      const assetPath = type === 'hard'
+        ? 'assets/games/hardeasy/hard-default.png'
+        : 'assets/games/hardeasy/easy-default.png';
       const card = document.createElement('div');
       card.className = `task-choice-card ${type}`;
+      card.style.backgroundImage = `url('${assetPath}')`;
+      card.style.backgroundSize = 'contain';
+      card.style.backgroundRepeat = 'no-repeat';
+      card.style.backgroundPosition = 'center top';
+      card.style.imageRendering = 'pixelated';
+      card.style.minHeight = '180px';
       card.innerHTML = `
         <div class="task-name">${task.icon} ${task.label}</div>
         <div class="task-reward">$${task.reward.toFixed(2)}</div>
@@ -103,10 +112,14 @@ window.HardEasyGame = (function () {
     currentChoice = type;
     const choiceTime = Date.now() - choiceStartTime;
 
-    // Highlight chosen
+    // Highlight chosen — switch to multi-state sprite asset
+    const selectedAsset = type === 'hard'
+      ? 'assets/games/hardeasy/hard-task.png'
+      : 'assets/games/hardeasy/easy-task.png';
     document.querySelectorAll('.task-choice-card').forEach(c => c.style.opacity = '0.5');
     cardEl.style.opacity = '1';
     cardEl.style.transform = 'scale(1.04)';
+    cardEl.style.backgroundImage = `url('${selectedAsset}')`;
     cardEl.style.boxShadow = `0 0 20px ${TASKS[type].color}`;
 
     setTimeout(() => startTask(type, choiceTime), 700);
@@ -149,7 +162,7 @@ window.HardEasyGame = (function () {
     taskInterval = setInterval(() => {
       taskTimeLeft--;
       if (timerEl) timerEl.textContent = taskTimeLeft;
-      if (timerEl && taskTimeLeft <= 3) timerEl.style.color = 'var(--color-pixel-red)';
+      if (timerEl && taskTimeLeft <= 3) timerEl.style.color = 'var(--gba-red)';
       if (taskTimeLeft <= 0) endTask(type, choiceTime);
     }, 1000);
   }
@@ -215,8 +228,8 @@ window.HardEasyGame = (function () {
     if (text) {
       text.textContent = succeeded ? 'SUCCESS!' : 'FAILED';
       text.style.color = succeeded
-        ? 'var(--color-pixel-green)'
-        : 'var(--color-pixel-red)';
+        ? 'var(--gba-green)'
+        : 'var(--gba-red)';
     }
     if (sub) {
       sub.textContent = succeeded

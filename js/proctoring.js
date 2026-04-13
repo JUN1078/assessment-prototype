@@ -267,8 +267,8 @@ window.PymetricProctor = (function () {
       return true;
     } catch (err) {
       if (statusEl) statusEl.textContent = 'CAM: NO ACCESS';
-      if (statusEl) statusEl.style.borderColor = 'var(--color-pixel-red)';
-      if (statusEl) statusEl.style.color = 'var(--color-pixel-red)';
+      if (statusEl) statusEl.style.borderColor = 'var(--gba-red)';
+      if (statusEl) statusEl.style.color = 'var(--gba-red)';
       logViolation('CAMERA', `Camera access denied: ${err.message}`);
       return false;
     }
@@ -396,7 +396,7 @@ window.PymetricProctor = (function () {
             flagged.NO_FACE = true;
             state.faceWarnings++;
             logViolation('NO_FACE', `No face detected (skin: ${(skinRatio*100).toFixed(1)}%)`);
-            if (statusEl) { statusEl.textContent = 'CAM: NO FACE ⚠'; statusEl.style.color = 'var(--color-pixel-red)'; }
+            if (statusEl) { statusEl.textContent = 'CAM: NO FACE ⚠'; statusEl.style.color = 'var(--gba-red)'; }
           }
           return;
         }
@@ -405,7 +405,7 @@ window.PymetricProctor = (function () {
         streaks.NO_FACE = 0;
         if (flagged.NO_FACE) {
           flagged.NO_FACE = false;
-          if (statusEl) { statusEl.style.color = 'var(--color-pixel-green)'; }
+          if (statusEl) { statusEl.style.color = 'var(--gba-green)'; }
         }
 
         // ── 2. MULTIPLE PEOPLE ──
@@ -416,7 +416,7 @@ window.PymetricProctor = (function () {
             flagged.MULTI_FACE = true;
             state.faceWarnings++;
             logViolation('MULTI_FACE', `${faceRegions} people detected in frame`);
-            if (statusEl) { statusEl.textContent = 'CAM: 2+ PEOPLE ⚠'; statusEl.style.color = 'var(--color-pixel-red)'; }
+            if (statusEl) { statusEl.textContent = 'CAM: 2+ PEOPLE ⚠'; statusEl.style.color = 'var(--gba-red)'; }
           }
         } else {
           streaks.MULTI_FACE = 0;
@@ -439,18 +439,18 @@ window.PymetricProctor = (function () {
               ? (centroidX < 0.5 ? 'looking LEFT' : 'looking RIGHT')
               : (centroidY < 0.5 ? 'looking UP'   : 'looking DOWN');
             logViolation('NOT_FOCUSED', `Face off-center: ${dir} (cx:${centroidX.toFixed(2)}, cy:${centroidY.toFixed(2)})`);
-            if (statusEl) { statusEl.textContent = 'CAM: NOT FOCUSED ⚠'; statusEl.style.color = 'var(--color-pixel-yellow)'; }
+            if (statusEl) { statusEl.textContent = 'CAM: NOT FOCUSED ⚠'; statusEl.style.color = 'var(--gba-gold)'; }
           }
         } else {
           streaks.NOT_FOCUSED = 0;
           if (flagged.NOT_FOCUSED) {
             flagged.NOT_FOCUSED = false;
-            if (statusEl) { statusEl.style.color = 'var(--color-pixel-green)'; }
+            if (statusEl) { statusEl.style.color = 'var(--gba-green)'; }
           }
           // All OK
           const regionLabel = faceRegions >= 2 ? `${faceRegions} FACES ⚠` : 'FACE OK ✓';
           if (statusEl) statusEl.textContent = `CAM: ${regionLabel}`;
-          if (!flagged.MULTI_FACE && statusEl) statusEl.style.color = 'var(--color-pixel-green)';
+          if (!flagged.MULTI_FACE && statusEl) statusEl.style.color = 'var(--gba-green)';
         }
 
       } catch (e) { /* canvas tainted or video not ready */ }

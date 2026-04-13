@@ -138,10 +138,10 @@ window.FacesGame = (function () {
     answered  = false;
     qStartTime = Date.now();
 
-    // Show face
+    // Show face with pixel art frame
     const stimulus = document.getElementById('face-stimulus');
     if (stimulus) {
-      stimulus.textContent = q.face;
+      stimulus.innerHTML = `<img src="assets/games/faces/face-sample.png" alt="" style="width:48px;height:48px;image-rendering:pixelated;vertical-align:middle;margin-right:8px;opacity:0.6;"><span style="vertical-align:middle;">${q.face}</span>`;
       stimulus.className   = 'face-display anim-pop';
       setTimeout(() => stimulus.classList.remove('anim-pop'), 400);
     }
@@ -151,11 +151,24 @@ window.FacesGame = (function () {
     if (!choicesEl) return;
     choicesEl.innerHTML = '';
 
+    // Panel assets for emotion buttons (cards + face panels)
+    const PANEL_ASSETS = [
+      'assets/games/cards/card-a.png',
+      'assets/games/cards/card-b.png',
+      'assets/games/cards/card-c.png',
+      'assets/games/cards/card-d.png'
+    ];
+
     // Shuffle choices
     const shuffled = [...q.choices].sort(() => Math.random() - 0.5);
-    shuffled.forEach(choice => {
+    shuffled.forEach((choice, idx) => {
       const btn = document.createElement('div');
       btn.className = 'emotion-btn';
+      btn.style.backgroundImage = `url('${PANEL_ASSETS[idx % PANEL_ASSETS.length]}')`;
+      btn.style.backgroundSize = 'cover';
+      btn.style.backgroundPosition = 'center';
+      btn.style.backgroundRepeat = 'no-repeat';
+      btn.style.imageRendering = 'pixelated';
       btn.textContent = choice;
       btn.onclick = () => answer(choice, q);
       choicesEl.appendChild(btn);
@@ -187,18 +200,31 @@ window.FacesGame = (function () {
       valence:      q.valence
     });
 
-    // Highlight choices
+    // Highlight choices with answer feedback PNG assets
     const btns = document.querySelectorAll('.emotion-btn');
     btns.forEach(btn => {
       btn.style.pointerEvents = 'none';
       if (btn.textContent === q.correct) {
-        btn.style.background     = 'rgba(46,204,113,0.3)';
-        btn.style.borderColor    = 'var(--color-pixel-green)';
-        btn.style.color          = 'var(--color-pixel-green)';
+        btn.style.backgroundImage = "url('assets/ui/answer-correct.png')";
+        btn.style.backgroundSize  = 'cover';
+        btn.style.backgroundPosition = 'center';
+        btn.style.imageRendering  = 'pixelated';
+        btn.style.borderColor     = 'var(--gba-green)';
+        btn.style.color           = 'var(--gba-green)';
       } else if (btn.textContent === chosen && !correct) {
-        btn.style.background  = 'rgba(255,71,87,0.3)';
-        btn.style.borderColor = 'var(--color-pixel-red)';
-        btn.style.color       = 'var(--color-pixel-red)';
+        btn.style.backgroundImage = "url('assets/ui/answer-wrong-selected.png')";
+        btn.style.backgroundSize  = 'cover';
+        btn.style.backgroundPosition = 'center';
+        btn.style.imageRendering  = 'pixelated';
+        btn.style.borderColor     = 'var(--gba-red)';
+        btn.style.color           = 'var(--gba-red)';
+      } else {
+        // Non-chosen wrong answers
+        btn.style.backgroundImage = "url('assets/ui/answer-wrong-unselected.png')";
+        btn.style.backgroundSize  = 'cover';
+        btn.style.backgroundPosition = 'center';
+        btn.style.imageRendering  = 'pixelated';
+        btn.style.opacity         = '0.5';
       }
     });
 
@@ -207,8 +233,8 @@ window.FacesGame = (function () {
         ? `✓ CORRECT! (${rt}ms)`
         : `✗ WRONG — It was ${q.correct} (${rt}ms)`,
       correct
-        ? 'color:var(--color-pixel-green)'
-        : 'color:var(--color-pixel-red)'
+        ? 'color:var(--gba-green)'
+        : 'color:var(--gba-red)'
     );
 
     updateHUD();
