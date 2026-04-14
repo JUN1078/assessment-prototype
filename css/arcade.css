@@ -111,11 +111,6 @@
 
 body {
   background-color: var(--gba-bg-deep);
-  background-image: url('../assets/ui/background.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   color: var(--gba-text);
   font-family: var(--font-retro);
   min-height: 100vh;
