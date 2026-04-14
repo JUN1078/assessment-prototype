@@ -8,12 +8,6 @@
   <style>
     body {
       background: var(--gba-bg-deep);
-      background-image: url('assets/ui/background.png');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      background-blend-mode: overlay;
-      image-rendering: pixelated;
       overflow-x: hidden;
     }
 
@@ -40,10 +34,6 @@
     #sidebar {
       width: 220px; min-width: 220px;
       background: rgba(0,0,0,0.5);
-      background-image: url('assets/ui/scrollable-content.png');
-      background-size: cover;
-      background-blend-mode: overlay;
-      image-rendering: pixelated;
       border-right: 4px solid var(--gba-card-border);
       padding: 16px 0; display: flex; flex-direction: column;
     }
@@ -525,22 +515,22 @@
     <div id="sidebar">
       <h3>▶ GAMES</h3>
       <div class="sidebar-game-item locked" id="sidebar-1" data-game="1">
-        <div class="s-num">1</div><img src="assets/icons/union-6.png" alt="" class="s-icon"><div class="s-label">BALLOON</div>
+        <div class="s-num">1</div><div class="s-icon" style="font-size:14px;display:flex;align-items:center;justify-content:center;">🎈</div><div class="s-label">BALLOON</div>
       </div>
       <div class="sidebar-game-item locked" id="sidebar-2" data-game="2">
-        <div class="s-num">2</div><img src="assets/icons/union-9.png" alt="" class="s-icon"><div class="s-label">TOWER</div>
+        <div class="s-num">2</div><div class="s-icon" style="font-size:14px;display:flex;align-items:center;justify-content:center;">🗼</div><div class="s-label">TOWER</div>
       </div>
       <div class="sidebar-game-item locked" id="sidebar-3" data-game="3">
-        <div class="s-num">3</div><img src="assets/icons/union-2.png" alt="" class="s-icon"><div class="s-label">KEYPRESS</div>
+        <div class="s-num">3</div><div class="s-icon" style="font-size:14px;display:flex;align-items:center;justify-content:center;">⌨️</div><div class="s-label">KEYPRESS</div>
       </div>
       <div class="sidebar-game-item locked" id="sidebar-4" data-game="4">
-        <div class="s-num">4</div><img src="assets/icons/union-8.png" alt="" class="s-icon"><div class="s-label">HARD/EASY</div>
+        <div class="s-num">4</div><div class="s-icon" style="font-size:14px;display:flex;align-items:center;justify-content:center;">⚡</div><div class="s-label">HARD/EASY</div>
       </div>
       <div class="sidebar-game-item locked" id="sidebar-5" data-game="5">
-        <div class="s-num">5</div><img src="assets/icons/union-10.png" alt="" class="s-icon"><div class="s-label">LENGTHS</div>
+        <div class="s-num">5</div><div class="s-icon" style="font-size:14px;display:flex;align-items:center;justify-content:center;">📏</div><div class="s-label">LENGTHS</div>
       </div>
       <div class="sidebar-game-item locked" id="sidebar-6" data-game="6">
-        <div class="s-num">6</div><img src="assets/icons/union-4.png" alt="" class="s-icon"><div class="s-label">FACES</div>
+        <div class="s-num">6</div><div class="s-icon" style="font-size:14px;display:flex;align-items:center;justify-content:center;">😊</div><div class="s-label">FACES</div>
       </div>
 
       <div id="sidebar-score">
@@ -695,7 +685,7 @@
           <div style="font-family:var(--font-pixel);font-size:12px;color:var(--gba-text-dim);letter-spacing:1px;margin-bottom:14px;">
             📋 INSTRUCTIONS
           </div>
-          <div id="intro-instructions" class="instruction-box" style="background-image:url('assets/games/faces/rules-panel.png');background-size:cover;background-position:center;background-repeat:no-repeat;background-blend-mode:overlay;image-rendering:pixelated;"></div>
+          <div id="intro-instructions" class="instruction-box"></div>
           <div style="text-align:center; margin-top:20px;">
             <button class="btn btn-success btn-lg" id="btnBeginGame">▶ BEGIN GAME</button>
           </div>
@@ -710,7 +700,7 @@
       <!-- ══════════════════════════════ -->
       <div class="game-screen" id="screen-lobby">
         <div class="lobby-wrap">
-          <div class="lobby-header" style="background-image:url('assets/ui/gba-frame-small.png');background-size:cover;background-position:center;background-repeat:no-repeat;background-blend-mode:overlay;image-rendering:pixelated;">
+          <div class="lobby-header">
             <div class="lobby-title">▶ MISSION SELECT ◀</div>
             <div class="lobby-subtitle">COMPLETE ALL 6 COGNITIVE ASSESSMENT GAMES IN ORDER</div>
           </div>
@@ -761,9 +751,6 @@
             </div>
           </div>
           <div class="balloon-container" id="balloon-area">
-            <!-- Pixel art balloon decoration -->
-            <img src="assets/games/balloon/balloon-red.png" alt="" class="balloon-pixel-art" style="position:absolute;top:8px;right:12px;width:40px;height:auto;image-rendering:pixelated;opacity:0.5;pointer-events:none;">
-            <img src="assets/games/balloon/balloon-gray.png" alt="" class="balloon-pixel-art" style="position:absolute;top:8px;left:12px;width:32px;height:auto;image-rendering:pixelated;opacity:0.35;pointer-events:none;">
             <svg id="balloon-svg" class="balloon-svg" width="160" height="200" viewBox="0 0 160 200" onclick="balloonPump()">
               <ellipse id="balloon-body" cx="80" cy="90" rx="60" ry="70" fill="#ff4757"/>
               <ellipse cx="60" cy="70" rx="15" ry="10" fill="rgba(255,255,255,0.25)"/>
@@ -786,15 +773,12 @@
       <!-- GAME 2: TOWER -->
       <div class="game-screen" id="screen-game-2">
         <div class="game-panel" style="position:relative;">
-          <!-- Decorative tower assets -->
-          <img src="assets/games/tower/tower-white.png" alt="" style="position:absolute;top:8px;right:8px;width:32px;height:auto;image-rendering:pixelated;opacity:0.15;pointer-events:none;">
-          <img src="assets/games/tower/disk-states.png" alt="" style="position:absolute;bottom:8px;left:8px;width:48px;height:auto;image-rendering:pixelated;opacity:0.12;pointer-events:none;">
           <div class="game-hud">
             <div><div class="score-label">MOVES</div><div class="score-display" id="tower-moves">0</div></div>
             <div style="text-align:center;"><div class="score-label">OPTIMAL</div><div style="font-family:var(--font-pixel);font-size:18px;color:var(--gba-purple);">31</div></div>
             <div style="text-align:right;"><div class="score-label">TIME</div><div class="timer-display" id="tower-timer">0:00</div></div>
           </div>
-          <div id="tower-board" class="tower-board" style="background-image:url('assets/games/tower/tower-blue.png');background-size:contain;background-position:center bottom;background-repeat:no-repeat;image-rendering:pixelated;background-blend-mode:overlay;">
+          <div id="tower-board" class="tower-board">
             <!-- Pegs rendered by JS -->
           </div>
           <div id="tower-feedback" style="font-family:var(--font-pixel);font-size:11px;text-align:center;margin-top:12px;min-height:20px;letter-spacing:1px;"></div>
